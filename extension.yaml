@@ -72,7 +72,7 @@ params:
   - param: STREAM_API_SECRET
     label: API secret for the Stream API
     description: What is your Stream API secret?
-    type: string
+    type: secret
     required: true
 
 resources:
@@ -94,11 +94,11 @@ resources:
     type: firebaseextensions.v1beta.function
     properties:
       location: ${LOCATION}
-      runtime: nodejs16
+      runtime: nodejs14
       httpsTrigger: {}
   - name: revokeStreamUserToken
     type: firebaseextensions.v1beta.function
     properties:
       location: ${LOCATION}
-      runtime: nodejs16
+      runtime: nodejs14
       httpsTrigger: {}
