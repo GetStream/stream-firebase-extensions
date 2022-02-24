@@ -22,6 +22,18 @@ params:
       guide](https://firebase.google.com/docs/functions/locations).
     type: select
     options:
+      - label: us-central1 (Iowa)
+        value: us-central1
+      - label: us-east1 (South Carolina)
+        value: us-east1
+      - label: us-east4 (Northern Virginia)
+        value: us-east4
+      - label: us-west2 (Los Angeles)
+        value: us-west2
+      - label: us-west3 (Salt Lake City)
+        value: us-west3
+      - label: us-west4 (Las Vegas)
+        value: us-west4
       - label: asia-east2 (Hong Kong)
         value: asia-east2
       - label: asia-northeast1 (Tokyo)
@@ -50,18 +62,6 @@ params:
         value: northamerica-northeast1
       - label: southamerica-east1 (Sao Paulo)
         value: southamerica-east1
-      - label: us-central1 (Iowa)
-        value: us-central1
-      - label: us-east1 (South Carolina)
-        value: us-east1
-      - label: us-east4 (Northern Virginia)
-        value: us-east4
-      - label: us-west2 (Los Angeles)
-        value: us-west2
-      - label: us-west3 (Salt Lake City)
-        value: us-west3
-      - label: us-west4 (Las Vegas)
-        value: us-west4
     default: us-central1
     required: true
     immutable: true
