@@ -6,7 +6,7 @@ This extension listens for Firebase Authentication user creation and deletion ev
 
 Before installing this extension, make sure that you've [set up Firebase Authentication](https://firebase.google.com/docs/auth) in your Firebase project.
 
-You must also have a Stream Chat account set up before installing this extension. You can do so on the [Stream](https://getstream.io/) site.
+You must also have a Stream Chat app set up before installing this extension. You can do so on the [Stream](https://getstream.io/) site.
 
 #### Billing
 
