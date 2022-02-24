@@ -1,9 +1,9 @@
-name: stream-chat-auth
+name: stream-activity-feeds-auth
 version: 0.0.1
 specVersion: v1beta  # Firebase Extensions specification version (do not edit)
 
-displayName: Stream Chat Auth
-description: Automatically synchronize Firebase Authentication users with Stream, and create and revoke Stream Chat authentication tokens.
+displayName: Stream Activity Feeds Auth
+description: Automatically synchronize Firebase Authentication users with Stream, and create and revoke Stream Activity Feed authentication tokens.
 
 license: Apache-2.0  # The license you want for the extension
 
@@ -69,6 +69,7 @@ params:
     label: API key for the Stream API
     description: What is your Stream API key?
     type: string
+    required: true
   - param: STREAM_API_SECRET
     label: API secret for the Stream API
     description: What is your Stream API secret?

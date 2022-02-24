@@ -1,0 +1,117 @@
+name: stream-chat-auth
+version: 0.0.1
+specVersion: v1beta  # Firebase Extensions specification version (do not edit)
+
+displayName: Stream Chat Auth
+description: Automatically synchronize Firebase Authentication users with Stream, and create and revoke Stream Chat authentication tokens.
+
+license: Apache-2.0  # The license you want for the extension
+
+author:
+  authorName: Stream
+  url: https://getstream.io/
+
+billingRequired: true
+
+params:
+  - param: LOCATION
+    label: Cloud Functions location
+    description: >-
+      Where do you want to deploy the functions created for this extension?
+      For help selecting a location, refer to the [location selection
+      guide](https://firebase.google.com/docs/functions/locations).
+    type: select
+    options:
+      - label: asia-east2 (Hong Kong)
+        value: asia-east2
+      - label: asia-northeast1 (Tokyo)
+        value: asia-northeast1
+      - label: asia-northeast2 (Osaka)
+        value: asia-northeast2
+      - label: asia-northeast3 (Seoul)
+        value: asia-northeast3
+      - label: asia-south1 (Mumbai)
+        value: asia-south1
+      - label: asia-southeast2 (Jakarta)
+        value: asia-southeast2
+      - label: australia-southeast1 (Sydney)
+        value: australia-southeast1
+      - label: europe-central2 (Warsaw)
+        value: europe-central2
+      - label: europe-west1 (Belgium)
+        value: europe-west1
+      - label: europe-west2 (London)
+        value: europe-west2
+      - label: europe-west3 (Frankfurt)
+        value: europe-west3
+      - label: europe-west6 (Zurich)
+        value: europe-west6
+      - label: northamerica-northeast1 (Montreal)
+        value: northamerica-northeast1
+      - label: southamerica-east1 (Sao Paulo)
+        value: southamerica-east1
+      - label: us-central1 (Iowa)
+        value: us-central1
+      - label: us-east1 (South Carolina)
+        value: us-east1
+      - label: us-east4 (Northern Virginia)
+        value: us-east4
+      - label: us-west2 (Los Angeles)
+        value: us-west2
+      - label: us-west3 (Salt Lake City)
+        value: us-west3
+      - label: us-west4 (Las Vegas)
+        value: us-west4
+    default: us-central1
+    required: true
+    immutable: true
+  - param: STREAM_API_KEY
+    label: API key for the Stream API
+    description: What is your Stream API key?
+    type: string
+    required: true
+  - param: STREAM_API_SECRET
+    label: API secret for the Stream API
+    description: What is your Stream API secret?
+    type: secret
+    required: true
+  - param: NAME_FIELD
+    label: User field for display name
+    description: In which field of the Activity Feed User object should the Firebase user's display name be saved?
+    type: string
+    required: false
+    default: name
+  - param: EMAIL_FIELD
+    label: User field for email
+    description: In which field of the Activity Feed User object should the Firebase user's email be saved?
+    type: string
+    required: false
+    default: email
+  - param: IMAGE_FIELD
+    label: User field for profile image
+    description: In which field of the Activity Feed User object should the Firebase user's profile image be saved?
+    type: string
+    required: false
+    default: profileImage
+
+resources:
+  - name: createStreamUser
+    type: firebaseextensions.v1beta.function
+    properties:
+      location: ${LOCATION}
+      eventTrigger:
+        eventType: providers/firebase.auth/eventTypes/user.create
+        resource: projects/${PROJECT_ID}
+  - name: deleteStreamUser
+    type: firebaseextensions.v1beta.function
+    properties:
+      location: ${LOCATION}
+      eventTrigger:
+        eventType: providers/firebase.auth/eventTypes/user.delete
+        resource: projects/${PROJECT_ID}
+  - name: getStreamUserToken
+    type: firebaseextensions.v1beta.function
+    properties:
+      location: ${LOCATION}
+      runtime: nodejs14
+      httpsTrigger: {}
