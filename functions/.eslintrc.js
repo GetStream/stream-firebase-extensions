@@ -25,6 +25,6 @@ module.exports = {
   rules: {
     quotes: ["error", "double"],
     "import/no-unresolved": 0,
-    "no-non-null-assertion": false,
+    "@typescript-eslint/no-non-null-assertion": 0,
   },
 };
