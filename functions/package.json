@@ -10,14 +10,12 @@
     "logs": "firebase functions:log"
   },
   "engines": {
-    "node": "16"
+    "node": "14"
   },
   "main": "lib/index.js",
   "dependencies": {
-    "eslint-config-prettier": "^8.4.0",
     "firebase-admin": "^10.0.2",
     "firebase-functions": "^3.18.1",
-    "prettier": "^2.5.1",
     "stream-chat": "^6.0.0"
   },
   "devDependencies": {
@@ -25,8 +23,10 @@
     "@typescript-eslint/parser": "^5.12.0",
     "eslint": "^8.9.0",
     "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^8.4.0",
     "eslint-plugin-import": "^2.25.4",
     "firebase-functions-test": "^0.3.3",
+    "prettier": "^2.5.1",
     "typescript": "^4.5.5"
   },
   "private": true
