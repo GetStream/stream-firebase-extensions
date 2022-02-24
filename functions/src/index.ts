@@ -10,25 +10,25 @@ const serverClient = StreamChat.getInstance(
 );
 
 // When a user is created in Firebase an associated Stream account is also created.
-export const createStreamUser = functions.handler.auth.user.onCreate((user) => {
+export const createStreamUser = functions.handler.auth.user.onCreate(async (user) => {
   functions.logger.log("Firebase user created", user);
   // Create user using the serverClient.
-  return serverClient
-    .upsertUser({
-      id: user.uid,
-      name: user.displayName,
-      email: user.email,
-      image: user.photoURL,
-    })
-    .then((response) => functions.logger.log("Stream user created", response));
+  const response = await serverClient.upsertUser({
+    id: user.uid,
+    name: user.displayName,
+    email: user.email,
+    image: user.photoURL,
+  });
+  functions.logger.log("Stream user created", response);
+  return response;
 });
 
 // When a user is deleted from Firebase their associated Stream account is also deleted.
-export const deleteStreamUser = functions.handler.auth.user.onDelete((user) => {
+export const deleteStreamUser = functions.handler.auth.user.onDelete(async (user) => {
   functions.logger.log("Firebase user deleted", user);
-  return serverClient
-    .deleteUser(user.uid)
-    .then((response) => functions.logger.log("Stream user deleted", response));
+  const response = await serverClient.deleteUser(user.uid);
+  functions.logger.log("Stream user deleted", response);
+  return response;
 });
 
 // Get Stream user token.
