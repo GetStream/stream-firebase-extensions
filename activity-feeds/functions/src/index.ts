@@ -11,11 +11,11 @@ export const createStreamUser = functions.handler.auth.user.onCreate(async (user
   functions.logger.log("Firebase user created", user);
   // Create user using the serverClient.
   const response = await serverClient.user(user.uid).create({
-    [process.env.NAME_FIELD!]: user.displayName,
-    [process.env.EMAIL_FIELD!]: user.email,
-    [process.env.IMAGE_FIELD!]: user.photoURL,
+    ...(user.displayName && { [process.env.NAME_FIELD!]: user.displayName }),
+    ...(user.email && { [process.env.EMAIL_FIELD!]: user.email }),
+    ...(user.photoURL && { [process.env.IMAGE_FIELD!]: user.photoURL }),
   });
-  functions.logger.log("Stream user created", response);
+  functions.logger.log("Stream user created", response.id, response.data);
   return response;
 });
 

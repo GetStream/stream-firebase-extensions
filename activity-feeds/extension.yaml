@@ -76,19 +76,19 @@ params:
     type: secret
     required: true
   - param: NAME_FIELD
-    label: User field for display name
+    label: Display name field
     description: In which field of the Activity Feed User object should the Firebase user's display name be saved?
     type: string
     required: false
     default: name
   - param: EMAIL_FIELD
-    label: User field for email
+    label: Email field
     description: In which field of the Activity Feed User object should the Firebase user's email be saved?
     type: string
     required: false
     default: email
   - param: IMAGE_FIELD
-    label: User field for profile image
+    label: Profile image field
     description: In which field of the Activity Feed User object should the Firebase user's profile image be saved?
     type: string
     required: false
