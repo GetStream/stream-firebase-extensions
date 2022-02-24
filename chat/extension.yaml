@@ -75,24 +75,6 @@ params:
     description: What is your Stream API secret?
     type: secret
     required: true
-  - param: NAME_FIELD
-    label: User field for display name
-    description: In which field of the Activity Feed User object should the Firebase user's display name be saved?
-    type: string
-    required: false
-    default: name
-  - param: EMAIL_FIELD
-    label: User field for email
-    description: In which field of the Activity Feed User object should the Firebase user's email be saved?
-    type: string
-    required: false
-    default: email
-  - param: IMAGE_FIELD
-    label: User field for profile image
-    description: In which field of the Activity Feed User object should the Firebase user's profile image be saved?
-    type: string
-    required: false
-    default: profileImage
 
 resources:
   - name: createStreamUser
