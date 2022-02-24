@@ -3,7 +3,7 @@ version: 0.0.1
 specVersion: v1beta  # Firebase Extensions specification version (do not edit)
 
 displayName: Stream Activity Feeds Auth
-description: Automatically synchronize Firebase Authentication users with Stream, and create and revoke Stream Activity Feed authentication tokens.
+description: Automatically synchronize Firebase Authentication users with Stream, and create Stream Activity Feed authentication tokens.
 
 license: Apache-2.0  # The license you want for the extension
 
@@ -92,12 +92,6 @@ resources:
         eventType: providers/firebase.auth/eventTypes/user.delete
         resource: projects/${PROJECT_ID}
   - name: getStreamUserToken
-    type: firebaseextensions.v1beta.function
-    properties:
-      location: ${LOCATION}
-      runtime: nodejs14
-      httpsTrigger: {}
-  - name: revokeStreamUserToken
     type: firebaseextensions.v1beta.function
     properties:
       location: ${LOCATION}
