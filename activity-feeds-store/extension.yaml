@@ -1,9 +1,9 @@
-name: stream-activity-feeds-auth
+name: stream-activity-feeds-store
 version: 0.0.1
 specVersion: v1beta  # Firebase Extensions specification version (do not edit)
 
-displayName: Stream Activity Feeds Auth
-description: Automatically synchronize Firebase Authentication users with Stream, and create Stream Activity Feed authentication tokens.
+displayName: Stream Activity Feeds Firestore
+description: Automatically populate Stream Activity feeds data from a Firestore
 
 license: Apache-2.0  # The license you want for the extension
 

@@ -1,48 +1,73 @@
 import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
 import * as stream from "getstream";
+import { Activity } from "getstream";
 
 admin.initializeApp();
 
-const serverClient = stream.connect(process.env.STREAM_API_KEY!, process.env.STREAM_API_SECRET!);
+const serverClient = stream.connect(
+  functions.config().stream.key,
+  functions.config().stream.secret,
+);
+
+// const serverClient = stream.connect(process.env.STREAM_API_KEY!, process.env.STREAM_API_SECRET!);
+
+/**
+ * Determine if document is a Stream activity
+ * @param {admin.firestore.DocumentData} payload Document to test
+ * @return {boolean} Type predicate
+ */
+function isActivity(payload?: admin.firestore.DocumentData): payload is Activity {
+  return (
+    !!payload &&
+    typeof payload.actor === "string" &&
+    typeof payload.verb === "string" &&
+    typeof payload.object === "string" &&
+    typeof payload.foreign_id === "string"
+  );
+}
 
 // When a user is created in Firebase an associated Stream account is also created.
-export const createStreamUser = functions.handler.auth.user.onCreate(async (user) => {
-  functions.logger.log("Firebase user created", user);
-  // Create user using the serverClient.
-  const response = await serverClient.user(user.uid).create({
-    ...(user.displayName && { [process.env.NAME_FIELD!]: user.displayName }),
-    ...(user.email && { [process.env.EMAIL_FIELD!]: user.email }),
-    ...(user.photoURL && { [process.env.IMAGE_FIELD!]: user.photoURL }),
-  });
-  functions.logger.log("Stream user created", response.id, response.data);
-  return response;
-});
+export const writeFirestore = functions.firestore
+  .document("feeds/{feedId}/{userId}/{foreignId}")
+  .onWrite(async (change, context) => {
+    if (!change.after.exists) {
+      // Delete
 
-// When a user is deleted from Firebase their associated Stream account is also deleted.
-export const deleteStreamUser = functions.handler.auth.user.onDelete(async (user) => {
-  functions.logger.log("Firebase user deleted", user);
-  const response = await serverClient.user(user.uid).delete();
-  functions.logger.log("Stream user deleted", response);
-  return response;
-});
-
-// Get Stream user token.
-export const getStreamUserToken = functions.handler.https.onCall((data, context) => {
-  // Checking that the user is authenticated.
-  if (!context.auth) {
-    // Throwing an HttpsError so that the client gets the error details.
-    throw new functions.https.HttpsError(
-      "failed-precondition",
-      "The function must be called while authenticated.",
-    );
-  } else {
-    try {
-      return serverClient.createUserToken(context.auth.uid);
-    } catch (err) {
-      console.error(`Unable to get user token with ID ${context.auth.uid} on Stream. Error ${err}`);
-      // Throwing an HttpsError so that the client gets the error details.
-      throw new functions.https.HttpsError("aborted", "Could not get Stream user");
+      const feed = serverClient.feed(context.params.feedId, context.params.userId);
+      const deletedActivity = {
+        ...change.before.data(),
+        ...{ foreign_id: context.params.foreignId },
+      };
+      if (!isActivity(deletedActivity)) {
+        functions.logger.warn("Document is not a valid Activity and cannot be deleted. Ignoring.");
+        return;
+      }
+      const response = await feed.removeActivity(deletedActivity);
+      functions.logger.log("Stream activity deleted", deletedActivity.foreign_id, response);
+      return;
     }
-  }
-});
+
+    const feed = serverClient.feed(context.params.feedId, context.params.userId);
+
+    const data = change.after.data();
+    const activity = {
+      ...data,
+      ...{ time: change.after.updateTime?.toDate().toISOString() },
+      ...{ foreign_id: context.params.foreignId },
+    };
+    if (!isActivity(activity)) {
+      functions.logger.warn("Document isn't a valid activity. Skipping.");
+      return;
+    }
+
+    if (change.before.exists) {
+      // Update
+      const response = await serverClient.updateActivity(activity);
+      functions.logger.log("Stream activity updated", activity, response);
+    } else {
+      // Create
+      const response = await feed.addActivity(activity);
+      functions.logger.log("Stream activity created", activity, response);
+    }
+  });
