@@ -53,7 +53,7 @@ export const writeFirestore = functions.firestore
     const data = change.after.data();
     const activity = {
       ...data,
-      ...{ time: change.after.updateTime?.toDate().toISOString() },
+      ...{ time: change.after.createTime?.toDate().toISOString() },
       ...{ foreign_id: context.params.foreignId },
     };
     if (!isActivity(activity)) {
@@ -63,11 +63,19 @@ export const writeFirestore = functions.firestore
 
     if (change.before.exists) {
       // Update
-      const response = await serverClient.updateActivity(activity);
-      functions.logger.log("Stream activity updated", activity, response);
+      try {
+        const response = await serverClient.updateActivity(activity);
+        functions.logger.log("Stream activity updated", activity, response);
+      } catch (e) {
+        functions.logger.log("Failed to update activity", activity, e);
+      }
     } else {
       // Create
-      const response = await feed.addActivity(activity);
-      functions.logger.log("Stream activity created", activity, response);
+      try {
+        const response = await feed.addActivity(activity);
+        functions.logger.log("Stream activity created", activity, response);
+      } catch (e) {
+        functions.logger.log("Failed to create activity", activity, e);
+      }
     }
   });
