@@ -6,12 +6,7 @@ import { Activity } from "getstream";
 
 admin.initializeApp();
 
-const serverClient = stream.connect(
-  functions.config().stream.key,
-  functions.config().stream.secret,
-);
-
-// const serverClient = stream.connect(process.env.STREAM_API_KEY!, process.env.STREAM_API_SECRET!);
+const serverClient = stream.connect(process.env.STREAM_API_KEY!, process.env.STREAM_API_SECRET!);
 
 /**
  * Determine if document is a Stream activity

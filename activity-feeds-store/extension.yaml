@@ -3,7 +3,7 @@ version: 0.0.1
 specVersion: v1beta  # Firebase Extensions specification version (do not edit)
 
 displayName: Stream Activity Feeds Firestore
-description: Automatically populate Stream Activity feeds data from a Firestore
+description: Automatically populate Stream Activity feeds using documents in a Firestore
 
 license: Apache-2.0  # The license you want for the extension
 
@@ -76,7 +76,7 @@ params:
     type: secret
     required: true
   - param: COLLECTION
-    label: Cloud Firestore collection name
+    label: Firestore collection name
     description: In which collection do you want to store your activity data?
     type: string
     default: feeds
