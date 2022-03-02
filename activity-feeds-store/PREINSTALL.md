@@ -1,10 +1,22 @@
-Use this extension to securely generate Stream Activity Feeds user tokens using Firebase Authentication.
+Use this extension to automatically create activity feeds from data in a Firestore Collection.
 
-This extension listens for Firebase Authentication user creation and deletion events and synchronizes corresponding users in Stream Activity Feeds. You can then use the included Firebase Function to generate authentication tokens valid for using the Activity Feeds API or SDKs.
+This extension listens for Firestore write events and synchronizes corresponding activities in Stream Activity Feeds. The Firestore documents are expected to be stored with the following path, where `feeds` is customizable via the `COLLECTION` parameter:
+
+```http
+feeds/{feedId}/{userId}/{foreignId}
+```
+
+The stored documents must have at least to follow fields:
+
+- `actor`: the actor performing the activity
+- `verb`: the verb of the activity
+- `object`: the object of the activity
+
+For more details, see the [Stream Activity Feeds documentation](https://getstream.io/activity-feeds/docs/node/adding_activities).
 
 #### Additional setup
 
-Before installing this extension, make sure that you've [set up Firebase Authentication](https://firebase.google.com/docs/auth) in your Firebase project.
+Before installing this extension, make sure that you've [set up a Cloud Firestore database](https://firebase.google.com/docs/firestore/quickstart) in your Firebase project.
 
 You must also have a Stream Activity Feeds app set up before installing this extension. You can do so on the [Stream](https://getstream.io/) site.
 

@@ -75,43 +75,18 @@ params:
     description: What is your Stream API secret?
     type: secret
     required: true
-  - param: NAME_FIELD
-    label: Display name field
-    description: In which field of the Activity Feed User object should the Firebase user's display name be saved?
+  - param: COLLECTION
+    label: Cloud Firestore collection name
+    description: In which collection do you want to store your activity data?
     type: string
-    required: false
-    default: name
-  - param: EMAIL_FIELD
-    label: Email field
-    description: In which field of the Activity Feed User object should the Firebase user's email be saved?
-    type: string
-    required: false
-    default: email
-  - param: IMAGE_FIELD
-    label: Profile image field
-    description: In which field of the Activity Feed User object should the Firebase user's profile image be saved?
-    type: string
-    required: false
-    default: profileImage
+    default: feeds
+    required: true
 
 resources:
-  - name: createStreamUser
+  - name: activitiesToFirestore
     type: firebaseextensions.v1beta.function
     properties:
       location: ${LOCATION}
       eventTrigger:
-        eventType: providers/firebase.auth/eventTypes/user.create
-        resource: projects/${PROJECT_ID}
-  - name: deleteStreamUser
-    type: firebaseextensions.v1beta.function
-    properties:
-      location: ${LOCATION}
-      eventTrigger:
-        eventType: providers/firebase.auth/eventTypes/user.delete
-        resource: projects/${PROJECT_ID}
-  - name: getStreamUserToken
-    type: firebaseextensions.v1beta.function
-    properties:
-      location: ${LOCATION}
-      runtime: nodejs14
-      httpsTrigger: {}
+        eventType: providers/cloud.firestore/eventTypes/document.write
+        resource: projects/${PROJECT_ID}/databases/(default)/documents/${COLLECTION}/{feedId}/{userId}/{foreignId}

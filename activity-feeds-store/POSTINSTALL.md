@@ -2,23 +2,29 @@
 
 You can test out this extension right away!
 
-1. Go to your [Authentication dashboard](https://console.firebase.google.com/project/${param:PROJECT_ID}/authentication/users) in the Firebase console.
+1. Go to the [Cloud Firestore tab](https://console.firebase.google.com/project/${param:PROJECT_ID}/database/firestore/data).
 
-1. Click **Add User** to add a test user, then make note of the test user's UID.
+1. Create a new document using the document path `${COLLECTION}/{feedId}/{userId}/{foreignId}`:
 
-1. Go to the [Stream Dashboard](https://getstream.io/dashboard), select your app and navigate to the Activity Feeds Explorer. You should see a new user created with the correct UID noted earlier.
+   1. If it doesn't exist already, create a collection with Collection ID `${param:COLLECTION}`.
 
-1. Go back to your [Authentication dashboard](https://console.firebase.google.com/project/${param:PROJECT_ID}/authentication/users), then delete the test user.
+   1. If it doesn't exist already, create a document in `${param:COLLECTION}` with a Document ID the same as one of your Stream feed groups. For example, `user`. The document does not require any fields.
 
-1. In a few seconds, the new user you added above will be deleted from Stream, and can be verified in the Activity Feeds Exporer.
+   1. If it doesn't exist already, create a subcollection in the feed group document with a Collection ID the same as one of your user's user IDs. For example, `1`.
+
+   1. Create a new document in the subcollection with a Document ID equal to your desired foreign ID. This foreign ID is a unique ID from you application for this activity, e.g. `pin:1` or `like:300`. Add some fields to your document, including at least the required `actor`, `verb` and `object` fields of an activity. Note that the `time` and `foreign_id` fields are not required in the document as they are automatically determined. See the [Stream Activity Feeds documentation](https://getstream.io/activity-feeds/docs/node/adding_activities) for more details.
+
+1. Go to the [Stream Dashboard](https://getstream.io/dashboard), select your app and navigate to the Activity Feeds Explorer. You should see a new activity created which includes the data from the Firestore document.
+
+1. Go back to the [Cloud Firestore tab](https://console.firebase.google.com/project/${param:PROJECT_ID}/database/firestore/data), then update or delete the test activity.
+
+1. In a few seconds, the new activity you added above will be updated or deleted from Stream, and can be verified in the Activity Feeds Exporer.
 
 ### Using the extension
 
-When a user's account is created or deleted from your project's authenticated users, this extension automatically creates or deletes a corresponding user from Stream Activity Feeds.
+When a document is created, updated or deleted from your project's Firestore collection, this extension automatically creates, updates or deletes a corresponding activity from Stream Activity Feeds.
 
-You can created or delete a user directly in your [Authentication dashboard](<(https://console.firebase.google.com/project/${param:PROJECT_ID}/authentication/users)>) or by using one of the Firebase Authentication SDKs. Learn more in the [Authentication documentation](https://firebase.google.com/docs/auth).
-
-You can also use the `${function:getStreamUserToken.name}` Firebase Function to generate authentication tokens suitable for use with the Activity Feeds API or SDKs.
+You can created or delete a document directly in the [Cloud Firestore tab](https://console.firebase.google.com/project/${param:PROJECT_ID}/database/firestore/data) or by using one of the Firebase Firestore SDKs. Learn more in the [Firestore documentation](https://firebase.google.com/docs/firestore).
 
 ### Monitoring
 

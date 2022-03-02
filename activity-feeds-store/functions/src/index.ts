@@ -1,5 +1,6 @@
 import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
+import { DocumentSnapshot } from "firebase-functions/v1/firestore";
 import * as stream from "getstream";
 import { Activity } from "getstream";
 
@@ -27,39 +28,72 @@ function isActivity(payload?: admin.firestore.DocumentData): payload is Activity
   );
 }
 
+type ActivityData = {
+  feedId: string;
+  userId: string;
+  activity: Activity;
+};
+
+/**
+ * Parse and verify activity data from snapshot
+ * @param {DocumentSnapshot} snapshot Document snapshot to parse
+ * @return {ActivityData} Feed, user and activity data
+ */
+function getActivityData(snapshot: DocumentSnapshot): ActivityData | undefined {
+  const feedId = snapshot.ref.parent.parent?.id;
+  if (!feedId) {
+    functions.logger.error(
+      "Couldn't parse feedId. Expects something like feeds/{feedId}/{userId}/{foreignId}",
+    );
+    return;
+  }
+
+  const foreignId = snapshot.id;
+  const activity = {
+    ...snapshot.data,
+    ...{ time: snapshot.createTime?.toDate().toISOString() },
+    ...{ foreign_id: foreignId },
+  };
+  if (!isActivity(activity)) {
+    functions.logger.warn("Document isn't a valid activity. Skipping.");
+    return;
+  }
+
+  const userId = snapshot.ref.parent.id;
+
+  return {
+    feedId,
+    userId,
+    activity,
+  };
+}
+
 // When a user is created in Firebase an associated Stream account is also created.
-export const writeFirestore = functions.firestore
-  .document("feeds/{feedId}/{userId}/{foreignId}")
-  .onWrite(async (change, context) => {
+export const activitiesToFirestore = functions.handler.firestore.document.onWrite(
+  async (change) => {
+    // expects something like feeds/{feedId}/{userId}/{foreignId}
+
     if (!change.after.exists) {
       // Delete
 
-      const feed = serverClient.feed(context.params.feedId, context.params.userId);
-      const deletedActivity = {
-        ...change.before.data(),
-        ...{ foreign_id: context.params.foreignId },
-      };
-      if (!isActivity(deletedActivity)) {
-        functions.logger.warn("Document is not a valid Activity and cannot be deleted. Ignoring.");
+      const data = getActivityData(change.before);
+      if (!data) {
         return;
       }
-      const response = await feed.removeActivity(deletedActivity);
-      functions.logger.log("Stream activity deleted", deletedActivity.foreign_id, response);
+      const { feedId, userId, activity } = data;
+
+      const feed = serverClient.feed(feedId, userId);
+      const response = await feed.removeActivity(activity);
+      functions.logger.log("Stream activity deleted", activity.foreign_id, response);
       return;
     }
 
-    const feed = serverClient.feed(context.params.feedId, context.params.userId);
-
-    const data = change.after.data();
-    const activity = {
-      ...data,
-      ...{ time: change.after.createTime?.toDate().toISOString() },
-      ...{ foreign_id: context.params.foreignId },
-    };
-    if (!isActivity(activity)) {
-      functions.logger.warn("Document isn't a valid activity. Skipping.");
+    const data = getActivityData(change.after);
+    if (!data) {
       return;
     }
+    const { feedId, userId, activity } = data;
+    const feed = serverClient.feed(feedId, userId);
 
     if (change.before.exists) {
       // Update
@@ -78,4 +112,5 @@ export const writeFirestore = functions.firestore
         functions.logger.log("Failed to create activity", activity, e);
       }
     }
-  });
+  },
+);

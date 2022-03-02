@@ -1,12 +1,24 @@
-# Stream Activity Feeds Auth
+# Stream Activity Feeds Firestore
 
 **Author**: Stream (**[https://getstream.io/](https://getstream.io/)**)
 
-**Description**: Automatically synchronize Firebase Authentication users with Stream, and create Stream Activity Feed authentication tokens.
+**Description**: Automatically populate Stream Activity feeds data from a Firestore.
 
-**Details**: Use this extension to securely generate Stream Activity Feeds user tokens using Firebase Authentication.
+**Details**: Use this extension to automatically create activity feeds from data in a Firestore Collection.
 
-This extension listens for Firebase Authentication user creation and deletion events and synchronizes corresponding users in Stream Activity Feeds. You can then use the included Firebase Function to generate authentication tokens valid for using the Activity Feeds API or SDKs.
+This extension listens for Firestore write events and synchronizes corresponding activities in Stream Activity Feeds. The Firestore documents are expected to be stored with the following path, where `feeds` is customizable via the `COLLECTION` parameter:
+
+```http
+feeds/{feedId}/{userId}/{foreignId}
+```
+
+The stored documents must have at least to follow fields:
+
+- `actor`: the actor performing the activity
+- `verb`: the verb of the activity
+- `object`: the object of the activity
+
+For more details, see the [Stream Activity Feeds documentation](https://getstream.io/activity-feeds/docs/node/adding_activities).
 
 ---
 
@@ -16,12 +28,12 @@ This extension listens for Firebase Authentication user creation and deletion ev
 
 [![Install this extension in your Firebase project](https://www.gstatic.com/mobilesdk/210513_mobilesdk/install-extension.png "Install this extension in your Firebase project")][install-link]
 
-[install-link]: https://console.firebase.google.com/project/_/extensions/install?ref=stream/stream-activity-feeds-auth
+[install-link]: https://console.firebase.google.com/project/_/extensions/install?ref=stream/stream-activity-feeds-store
 
 ### Firebase CLI
 
 ```bash
-firebase ext:install stream/stream-activity-feeds-auth --project=[your-project-id]
+firebase ext:install stream/stream-activity-feeds-store --project=[your-project-id]
 ```
 
 > Learn more about installing extensions in the Firebase Extensions documentation:
@@ -32,7 +44,7 @@ firebase ext:install stream/stream-activity-feeds-auth --project=[your-project-i
 
 #### Additional setup
 
-Before installing this extension, make sure that you've [set up Firebase Authentication](https://firebase.google.com/docs/auth) in your Firebase project.
+Before installing this extension, make sure that you've [set up a Cloud Firestore database](https://firebase.google.com/docs/firestore/quickstart) in your Firebase project.
 
 You must also have a Stream Activity Feeds app set up before installing this extension. You can do so on the [Stream](https://getstream.io/) site.
 
