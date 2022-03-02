@@ -14,13 +14,26 @@ const serverClient = stream.connect(process.env.STREAM_API_KEY!, process.env.STR
  * @return {boolean} Type predicate
  */
 function isActivity(payload?: admin.firestore.DocumentData): payload is Activity {
-  return (
-    !!payload &&
-    typeof payload.actor === "string" &&
-    typeof payload.verb === "string" &&
-    typeof payload.object === "string" &&
-    typeof payload.foreign_id === "string"
-  );
+  if (!payload) {
+    return false;
+  }
+  if (typeof payload.actor !== "string") {
+    functions.logger.error("Expected 'actor' field.", payload.actor);
+    return false;
+  }
+  if (typeof payload.verb !== "string") {
+    functions.logger.error("Expected 'verb' field.", payload.verb);
+    return false;
+  }
+  if (typeof payload.object !== "string") {
+    functions.logger.error("Expected 'object' field.", payload.object);
+    return false;
+  }
+  if (typeof payload.foreign_id !== "string") {
+    functions.logger.error("Expected 'foreign_id' field.", payload.foreign_id);
+    return false;
+  }
+  return true;
 }
 
 type ActivityData = {
@@ -38,7 +51,7 @@ function getActivityData(snapshot: DocumentSnapshot): ActivityData | undefined {
   const feedId = snapshot.ref.parent.parent?.id;
   if (!feedId) {
     functions.logger.error(
-      "Couldn't parse feedId. Expects something like feeds/{feedId}/{userId}/{foreignId}",
+      `Couldn't parse feedId. Expected ${process.env.COLLECTION}/{feedId}/{userId}/{foreignId}`,
     );
     return;
   }
@@ -50,7 +63,7 @@ function getActivityData(snapshot: DocumentSnapshot): ActivityData | undefined {
     ...{ foreign_id: foreignId },
   };
   if (!isActivity(activity)) {
-    functions.logger.warn("Document isn't a valid activity. Skipping.");
+    functions.logger.warn("Document isn't a valid activity. Skipping.", activity);
     return;
   }
 
@@ -66,8 +79,6 @@ function getActivityData(snapshot: DocumentSnapshot): ActivityData | undefined {
 // When a user is created in Firebase an associated Stream account is also created.
 export const activitiesToFirestore = functions.handler.firestore.document.onWrite(
   async (change) => {
-    // expects something like feeds/{feedId}/{userId}/{foreignId}
-
     if (!change.after.exists) {
       // Delete
 
