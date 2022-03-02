@@ -18,19 +18,19 @@ function isActivity(payload?: admin.firestore.DocumentData): payload is Activity
     return false;
   }
   if (typeof payload.actor !== "string") {
-    functions.logger.error("Expected 'actor' field.", payload.actor);
+    functions.logger.error("Expected 'actor' field.", payload);
     return false;
   }
   if (typeof payload.verb !== "string") {
-    functions.logger.error("Expected 'verb' field.", payload.verb);
+    functions.logger.error("Expected 'verb' field.", payload);
     return false;
   }
   if (typeof payload.object !== "string") {
-    functions.logger.error("Expected 'object' field.", payload.object);
+    functions.logger.error("Expected 'object' field.", payload);
     return false;
   }
   if (typeof payload.foreign_id !== "string") {
-    functions.logger.error("Expected 'foreign_id' field.", payload.foreign_id);
+    functions.logger.error("Expected 'foreign_id' field.", payload);
     return false;
   }
   return true;
@@ -58,7 +58,7 @@ function getActivityData(snapshot: DocumentSnapshot): ActivityData | undefined {
 
   const foreignId = snapshot.id;
   const activity = {
-    ...snapshot.data,
+    ...snapshot.data(),
     ...{ time: snapshot.createTime?.toDate().toISOString() },
     ...{ foreign_id: foreignId },
   };

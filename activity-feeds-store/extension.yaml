@@ -65,6 +65,12 @@ params:
     default: us-central1
     required: true
     immutable: true
+  - param: COLLECTION
+    label: Firestore collection name
+    description: In which collection do you want to store your activity data?
+    type: string
+    default: feeds
+    required: true
   - param: STREAM_API_KEY
     label: API key for the Stream API
     description: What is your Stream API key?
@@ -74,12 +80,6 @@ params:
     label: API secret for the Stream API
     description: What is your Stream API secret?
     type: secret
-    required: true
-  - param: COLLECTION
-    label: Firestore collection name
-    description: In which collection do you want to store your activity data?
-    type: string
-    default: feeds
     required: true
 
 resources:
