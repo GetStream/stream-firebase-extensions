@@ -16,7 +16,6 @@ export const createStreamUser = functions.handler.auth.user.onCreate(async (user
     ...(user.photoURL && { [process.env.IMAGE_FIELD!]: user.photoURL }),
   });
   functions.logger.log("Stream user created", response.id, response.data);
-  return response;
 });
 
 // When a user is deleted from Firebase their associated Stream account is also deleted.
@@ -24,7 +23,6 @@ export const deleteStreamUser = functions.handler.auth.user.onDelete(async (user
   functions.logger.log("Firebase user deleted", user);
   const response = await serverClient.user(user.uid).delete();
   functions.logger.log("Stream user deleted", response);
-  return response;
 });
 
 // Get Stream user token.
