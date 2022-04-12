@@ -42,7 +42,11 @@ export const getStreamUserToken = functions.handler.https.onCall((data, context)
     );
   } else {
     try {
-      return serverClient.createToken(context.auth.uid);
+      return serverClient.createToken(
+        context.auth.uid,
+        undefined,
+        Math.round(new Date().getTime() / 1000),
+      );
     } catch (err) {
       console.error(`Unable to get user token with ID ${context.auth.uid} on Stream. Error ${err}`);
       // Throwing an HttpsError so that the client gets the error details.
