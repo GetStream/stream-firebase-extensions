@@ -1,5 +1,5 @@
 name: stream-chat-auth
-version: 0.0.1
+version: 0.0.2
 specVersion: v1beta  # Firebase Extensions specification version (do not edit)
 
 displayName: Stream Chat Auth
