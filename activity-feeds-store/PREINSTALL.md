@@ -2,7 +2,7 @@ Use this extension to automatically create Activity Feeds from data in a Firesto
 
 The extension listens for Firestore write events and synchronizes corresponding activities in Stream’s Activity Feeds. The Firestore documents are expected to be stored with the following path, where `feeds` is customizable via the `COLLECTION` parameter:
 
-```http
+```bash
 feeds/{feedId}/{userId}/{foreignId}
 ```
 
