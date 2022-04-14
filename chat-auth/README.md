@@ -1,14 +1,14 @@
-# Stream Chat Auth
+# Authenticate with Stream Chat using Firebase Auth
 
 **Author**: Stream (**[https://getstream.io/](https://getstream.io/)**)
 
-**Description**: Automatically synchronize Firebase Authentication users with Stream, and create and revoke Stream Chat authentication tokens.
+**Description**: Synchronize your Firebase Auth user records with Stream Chat and authenticate with Stream Chat using Firebase.
 
 **Details**: Use this extension to securely generate Stream Chat user tokens using Firebase Authentication.
 
 ---
 
-## 🧩 How to install this extension
+## 🧩 How to Install This Extension
 
 ### Using the Firebase Console
 
@@ -38,9 +38,15 @@ firebase ext:install stream/stream-chat-auth --project=[your-project-id]
 > [console](https://firebase.google.com/docs/extensions/install-extensions?platform=console),
 > [CLI](https://firebase.google.com/docs/extensions/install-extensions?platform=cli)
 
+## Configuration Parameters
+
+- Cloud Functions location: Where do you want to deploy the functions created for this extension? For help selecting a location, refer to the [location selection guide](https://firebase.google.com/docs/functions/locations).
+- API key for the Stream API: What is your Stream API key?
+- API secret for the Stream API: What is your Stream API secret?
+
 ---
 
-## How to Use this Extension
+## How to Use This Extension
 
 With this extension, you can use Firebase Auth to handle Stream Chat user authentication.
 
@@ -52,7 +58,7 @@ By using Firebase Auth, you can use any of the following Firebase Authentication
 - Custom auth system integrations
 - Anonymous auth
 
-## Additional setup
+## Additional Setup
 
 Before installing this extension, set up Firebase Authentication in your Firebase project.
 You must also set up a Stream Chat app before installing this extension—you can do so on the Stream site.
@@ -70,11 +76,3 @@ You are responsible for any costs associated with your use of these services.
 Your Firebase project must be on the Blaze (pay-as-you-go) plan to install the extension. You will only be charged for the resources you use. Most Firebase services offer a free tier for low-volume use. [Learn more about Firebase billing.](https://firebase.google.com/pricing)
 
 When installing or reconfiguring this extension, you will be billed a small amount (typically less than $0.10). See Cloud Functions under [Firebase Pricing](https://firebase.google.com/pricing) for a detailed explanation.
-
-**Configuration Parameters:**
-
-- Cloud Functions location: Where do you want to deploy the functions created for this extension? For help selecting a location, refer to the [location selection guide](https://firebase.google.com/docs/functions/locations).
-
-- API key for the Stream API: What is your Stream API key?
-
-- API secret for the Stream API: What is your Stream API secret?

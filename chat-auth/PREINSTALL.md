@@ -8,7 +8,7 @@ By using Firebase Auth, you can use any of the following Firebase Authentication
 - Custom auth system integrations
 - Anonymous auth
 
-### Additional setup
+### Additional Setup
 
 Before installing this extension, set up Firebase Authentication in your Firebase project.
 You must also set up a Stream Chat app before installing this extension—you can do so on the Stream site.

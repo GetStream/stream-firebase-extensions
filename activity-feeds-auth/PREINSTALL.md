@@ -1,16 +1,22 @@
-Use this extension to securely generate Stream Activity Feeds user tokens using Firebase Authentication.
+Use this extension to sync a Stream Feeds project to Firebase Authentication.
 
-This extension listens for Firebase Authentication user creation and deletion events and synchronizes corresponding users in Stream Activity Feeds. You can then use the included Firebase Function to generate authentication tokens valid for using the Activity Feeds API or SDKs.
+Syncing your Stream Feeds project to Firebase Authentication gives you server-side access to pre-configured [Firebase Cloud Functions](https://firebase.google.com/docs/functions), enabling you to use any of the following Firebase Authentication SDK sign-in methods in your app:
 
-#### Additional setup
+- Email and password-based authentication
+- Federated identity provider integrations (Google, Apple, Facebook, Twitter, GitHub)
+- Phone number authentication
+- Custom auth system integrations
+- Anonymous auth
+
+### Additional Setup
 
 Before installing this extension, make sure that you've [set up Firebase Authentication](https://firebase.google.com/docs/auth) in your Firebase project.
 
 You must also have a Stream Activity Feeds app set up before installing this extension. You can do so on the [Stream](https://getstream.io/) site.
 
-#### Billing
+### Billing
 
-This extension uses the following Firebase services which may have associated charges:
+This extension uses the following Firebase services, which may have associated charges:
 
 - Cloud Functions
 
@@ -20,7 +26,7 @@ This extension also uses the following third-party services:
 
 You are responsible for any costs associated with your use of these services.
 
-#### Note from Firebase
+### Note from Firebase
 
 To install this extension, your Firebase project must be on the Blaze (pay-as-you-go) plan. You will only be charged for the resources you use. Most Firebase services offer a free tier for low-volume use. [Learn more about Firebase billing.](https://firebase.google.com/pricing)
 
