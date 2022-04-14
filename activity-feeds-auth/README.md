@@ -63,13 +63,13 @@ Syncing your Stream Feeds project to Firebase Authentication gives you server-si
 - Custom auth system integrations
 - Anonymous auth
 
-## Additional Setup
+### Additional Setup
 
 Before installing this extension, [set up Firebase Authentication](https://firebase.google.com/docs/auth) in your Firebase project.
 
 When configuring this extension, you must also set up a [Stream account](https://getstream.io/try-for-free/) or use an existing account and provide your **Stream API Key** and **Secret**.
 
-## Billing
+### Billing
 
 This extension uses the following Firebase services, which may have associated charges:
 
@@ -81,7 +81,7 @@ This extension also uses the following third-party services:
 
 You are responsible for any costs associated with your use of these services.
 
-## Note from Firebase
+### Note from Firebase
 
 To install this extension, your Firebase project must be on the Blaze (pay-as-you-go) plan. You will only be charged for the resources you use. Most Firebase services offer a free tier for low-volume use. [Learn more about Firebase billing.](https://firebase.google.com/pricing)
 

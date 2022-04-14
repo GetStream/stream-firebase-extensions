@@ -58,12 +58,12 @@ By using Firebase Auth, you can use any of the following Firebase Authentication
 - Custom auth system integrations
 - Anonymous auth
 
-## Additional Setup
+### Additional Setup
 
 Before installing this extension, set up Firebase Authentication in your Firebase project.
 You must also set up a Stream Chat app before installing this extension—you can do so on the Stream site.
 
-## Billing
+### Billing
 
 This extension uses the following Firebase services, which may have associated charges:
 Cloud Functions
@@ -71,7 +71,7 @@ This extension also uses the following third-party services:
 Stream Chat
 You are responsible for any costs associated with your use of these services.
 
-## Note from Firebase
+### Note from Firebase
 
 Your Firebase project must be on the Blaze (pay-as-you-go) plan to install the extension. You will only be charged for the resources you use. Most Firebase services offer a free tier for low-volume use. [Learn more about Firebase billing.](https://firebase.google.com/pricing)
 
