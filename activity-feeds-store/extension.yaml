@@ -1,4 +1,4 @@
-name: stream-activity-feeds-store
+name: firestore-activity-feeds
 version: 0.0.1
 specVersion: v1beta  # Firebase Extensions specification version (do not edit)
 
