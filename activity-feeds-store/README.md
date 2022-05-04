@@ -16,7 +16,7 @@ To install and manage extensions, you can use the Firebase console.
 
 [![Install using console](https://www.gstatic.com/mobilesdk/210513_mobilesdk/install-extension.png "Install using console")][install-link]
 
-[install-link]: https://console.firebase.google.com/project/_/extensions/install?ref=stream/stream-activity-feeds-store
+[install-link]: https://console.firebase.google.com/project/_/extensions/install?ref=stream/firestore-activity-feeds
 
 ### Using the Firebase CLI
 
@@ -31,7 +31,7 @@ npm install -g firebase-tools
 **Step 2**: Install this extension by running the following command:
 
 ```bash
-firebase ext:install stream/stream-activity-feeds-store --project=[your-project-id]
+firebase ext:install stream/firestore-activity-feeds --project=[your-project-id]
 ```
 
 > Learn more about installing extensions in the Firebase Extensions documentation:
