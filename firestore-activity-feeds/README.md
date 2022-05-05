@@ -63,7 +63,7 @@ The stored documents must have at least the following fields:
 
 - `actor`: the entity performing the activity
 - `verb`: the type of action performed on the activity
-- `object`: he content of the activity itself (often a reference)
+- `object`: the content of the activity itself (often a reference)
 
 For more details, see the [Stream Activity Feeds documentation](https://getstream.io/activity-feeds/docs/node/adding_activities).
 
