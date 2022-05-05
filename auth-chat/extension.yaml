@@ -2,7 +2,7 @@ name: auth-chat
 version: 0.0.2
 specVersion: v1beta  # Firebase Extensions specification version (do not edit)
 
-displayName: Stream Chat Auth
+displayName: Authenticate with Stream Chat
 description: Automatically synchronize Firebase Authentication users with Stream, and create and revoke Stream Chat authentication tokens.
 
 license: Apache-2.0  # The license you want for the extension
@@ -10,6 +10,8 @@ license: Apache-2.0  # The license you want for the extension
 author:
   authorName: Stream
   url: https://getstream.io/
+
+sourceUrl: https://github.com/GetStream/stream-firebase-extensions/tree/main/auth-chat
 
 billingRequired: true
 
