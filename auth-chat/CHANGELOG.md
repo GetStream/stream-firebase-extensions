@@ -1,3 +1,7 @@
+## Version 0.0.3
+
+New display name.
+
 ## Version 0.0.2
 
 JWTs are now generated with the `iat` payload set to the current time.

@@ -1,3 +1,7 @@
+## Version 0.0.3
+
+New display name.
+
 ## Version 0.0.2
 
 Fixed issue where returning Stream's response would attempt cyclic serialization.
