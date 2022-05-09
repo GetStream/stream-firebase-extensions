@@ -16,9 +16,13 @@ You must also set up a Stream Chat app before installing this extension—you ca
 ### Billing
 
 This extension uses the following Firebase services, which may have associated charges:
-Cloud Functions
+
+- Cloud Functions
+
 This extension also uses the following third-party services:
-Stream Chat
+
+- Stream Chat ([pricing information](https://getstream.io/chat/pricing/))
+
 You are responsible for any costs associated with your use of these services.
 
 ### Note from Firebase

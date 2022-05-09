@@ -2,7 +2,7 @@ name: firestore-activity-feeds
 version: 0.0.2
 specVersion: v1beta  # Firebase Extensions specification version (do not edit)
 
-displayName: Sync Firestore with Activity Feeds
+displayName: Syncs Firestore with Activity Feeds.
 description: Automatically populate Stream Activity feeds using documents in a Firestore
 
 license: Apache-2.0  # The license you want for the extension
