@@ -18,6 +18,7 @@ You must also set up a Stream Chat app before installing this extension—you ca
 This extension uses the following Firebase services, which may have associated charges:
 
 - Cloud Functions
+- Secret Manager
 
 This extension also uses the following third-party services:
 
