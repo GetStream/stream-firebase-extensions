@@ -1,6 +1,6 @@
-With this extension, you can use Firebase Auth to handle Stream Chat user authentication.
+With this extension, you can use Firebase Authentication to handle Stream Chat user authentication.
 
-By using Firebase Auth, you can use any of the following Firebase Authentication SDK sign-in methods with Stream Chat:
+By using Firebase Authentication, you can use any of the following Firebase Authentication SDK sign-in methods with Stream Chat:
 
 - Email and password-based authentication
 - Federated identity provider integrations (Google, Apple, Facebook, Twitter, GitHub)
