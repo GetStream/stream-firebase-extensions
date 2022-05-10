@@ -1,3 +1,7 @@
+## Version 0.1.2
+
+Copy updates
+
 ## Version 0.0.3
 
 New display name.
