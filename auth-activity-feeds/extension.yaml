@@ -3,7 +3,7 @@ version: 0.1.0
 specVersion: v1beta  # Firebase Extensions specification version (do not edit)
 
 displayName: Authenticate with Stream Feeds
-description: Automatically synchronize Firebase Authentication users with Stream, and create Stream Activity Feed authentication tokens.
+description: Automatically synchronizes Firebase Authentication users with Stream, and creates Stream Activity Feed authentication tokens.
 
 license: Apache-2.0  # The license you want for the extension
 
