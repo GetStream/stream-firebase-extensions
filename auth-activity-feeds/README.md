@@ -2,7 +2,7 @@
 
 **Author**: Stream (**[https://getstream.io/](https://getstream.io/)**)
 
-**Description**: Authenticates and syncs your users between Firebase Auth and Stream Feeds.
+**Description**: Authenticates and syncs your users between Firebase Authentication and Stream Feeds.
 
 **Details**: Use this extension to securely generate Stream Activity Feeds user tokens using Firebase Authentication.
 
