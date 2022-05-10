@@ -1,4 +1,4 @@
-# Authenticate with Stream Chat using Firebase Auth
+# Authenticate with Stream Chat using Firebase Authentication
 
 **Author**: Stream (**[https://getstream.io/](https://getstream.io/)**)
 
@@ -66,9 +66,14 @@ You must also set up a Stream Chat app before installing this extension—you ca
 ### Billing
 
 This extension uses the following Firebase services, which may have associated charges:
-Cloud Functions
+
+- Cloud Functions
+- Secret Manager
+
 This extension also uses the following third-party services:
-Stream Chat
+
+- Stream Activity Feeds ([pricing information](https://getstream.io/activity-feeds/pricing/))
+
 You are responsible for any costs associated with your use of these services.
 
 ### Note from Firebase
