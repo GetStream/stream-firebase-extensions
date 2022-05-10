@@ -1,4 +1,4 @@
-# Create Activity Feeds with Stream Feeds
+# Sync Firestore with Activity Feeds
 
 **Author**: Stream (**[https://getstream.io/](https://getstream.io/)**)
 
