@@ -1,4 +1,4 @@
-# Authenticate with Stream Feeds using Firebase Auth
+# Authenticate with Stream Feeds using Firebase Authentication
 
 **Author**: Stream (**[https://getstream.io/](https://getstream.io/)**)
 
@@ -74,6 +74,7 @@ When configuring this extension, you must also set up a [Stream account](https:/
 This extension uses the following Firebase services, which may have associated charges:
 
 - Cloud Functions
+- Secret Manager
 
 This extension also uses the following third-party services:
 
