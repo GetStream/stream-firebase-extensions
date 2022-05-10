@@ -69,6 +69,7 @@ This extension uses the following Firebase services, which may have associated c
 
 - Cloud Functions
 - Secret Manager
+- Firebase Authentication
 
 This extension also uses the following third-party services:
 
