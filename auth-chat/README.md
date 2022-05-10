@@ -2,7 +2,7 @@
 
 **Author**: Stream (**[https://getstream.io/](https://getstream.io/)**)
 
-**Description**: Synchronize your Firebase Auth user records with Stream Chat and authenticate with Stream Chat using Firebase.
+**Description**: Synchronize your Firebase Authentication user records with Stream Chat and authenticate with Stream Chat using Firebase.
 
 **Details**: Use this extension to securely generate Stream Chat user tokens using Firebase Authentication.
 
