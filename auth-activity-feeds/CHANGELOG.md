@@ -1,6 +1,10 @@
+## Version 0.1.2
+
+Add prepare scripts for production installations.
+
 ## Version 0.1.1
 
-Copy updates
+Copy updates.
 
 ## Version 0.0.3
 
