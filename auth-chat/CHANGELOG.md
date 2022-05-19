@@ -1,3 +1,7 @@
+## Version 0.1.4
+
+Update firebase-functions dependency to fix toJSON bug.
+
 ## Version 0.1.3
 
 Add prepare scripts for production installations.
