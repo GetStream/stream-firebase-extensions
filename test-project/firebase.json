@@ -1,6 +1,7 @@
 {
   "extensions": {
-    "auth-activity-feeds": "../auth-activity-feeds"
+    "auth-activity-feeds": "../auth-activity-feeds",
+    "auth-chat": "../auth-chat"
   },
   "emulators": {
     "auth": {
