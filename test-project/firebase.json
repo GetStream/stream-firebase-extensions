@@ -1,0 +1,13 @@
+{
+  "extensions": {
+    "auth-activity-feeds": "../auth-activity-feeds"
+  },
+  "emulators": {
+    "auth": {
+      "port": 9099
+    },
+    "ui": {
+      "enabled": true
+    }
+  }
+}
