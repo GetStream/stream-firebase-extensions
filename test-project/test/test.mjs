@@ -51,5 +51,9 @@ console.log("Successfully deleted user");
 // TODO verify user deletion in feeds
 // TODO verify user deletion in chat
 
-// TODO test writing firestore document
-// TODO verify writing firestore document in feeds
+// TODO test creating firestore document
+// TODO verify creating firestore document in feeds
+// TODO test updating firestore document
+// TODO verify updating firestore document in feeds
+// TODO test deleting firestore document
+// TODO verify deleting firestore document in feeds
