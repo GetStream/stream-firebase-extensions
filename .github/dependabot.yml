@@ -6,14 +6,14 @@
 version: 2
 updates:
   - package-ecosystem: "npm"
-    directory: "/auth-activity-feeds"
+    directory: "/auth-activity-feeds/functions"
     schedule:
       interval: "daily"
   - package-ecosystem: "npm"
-    directory: "/auth-chat"
+    directory: "/auth-chat/functions"
     schedule:
       interval: "daily"
   - package-ecosystem: "npm"
-    directory: "/firestore-activity-feeds"
+    directory: "/firestore-activity-feeds/functions"
     schedule:
       interval: "daily"
