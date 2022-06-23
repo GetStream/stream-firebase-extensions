@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "types": ["jest", "node"]
-  },
-  "esModuleInterop": true
+    "types": ["jest", "node"],
+    "esModuleInterop": true
+  }
 }

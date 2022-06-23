@@ -22,19 +22,21 @@ describe("create user", () => {
   const image = "https://api.lorem.space/image/face";
   const email = "user@example.com";
 
-  test("create firebase user", async () => {
+  // Create Firebase user to trigger extension functions
+  beforeAll(async () => {
     ({ uid } = await getAuth().createUser({
       email,
+      displayName: name,
+      photoURL: image,
       emailVerified: false,
       phoneNumber: "+11234567890",
       password: "secretPassword",
-      displayName: name,
-      photoURL: image,
       disabled: false,
     }));
-  });
 
-  test("wait", async () => await new Promise((resolve) => setTimeout(resolve, 2000)));
+    // Wait for triggers to execute
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+  });
 
   test("verify chat user creation", async () => {
     // Verify creation of user
