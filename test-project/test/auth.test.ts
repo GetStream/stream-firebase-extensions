@@ -131,27 +131,9 @@ describe("delete user", () => {
   });
 });
 
-/*
-console.log("Waiting 5 seconds...");
-await new Promise((resolve) => setTimeout(resolve, 5000));
-
-try {
-  await getAuth().deleteUser(uid);
-} catch (error) {
-  console.error("Error deleting user:", error);
-  process.exitCode = 1;
-}
-
-console.log("Successfully deleted user");
-
-// TODO verify user deletion in feeds
-// TODO verify user deletion in chat
-
 // TODO test creating firestore document
 // TODO verify creating firestore document in feeds
 // TODO test updating firestore document
 // TODO verify updating firestore document in feeds
 // TODO test deleting firestore document
 // TODO verify deleting firestore document in feeds
-
-*/
