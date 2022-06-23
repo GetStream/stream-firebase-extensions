@@ -87,6 +87,11 @@ describe("generate tokens", () => {
     await chatClient.connectUser({ id: uid }, token);
     expect(chatClient.user.name).toBe(name);
     await chatClient.disconnectUser();
+
+    const revokeStreamUserToken = httpsCallable<undefined, string>(functions, "ext-auth-chat-revokeStreamUserToken");
+    await revokeStreamUserToken();
+
+    await expect(chatClient.connectUser({ id: uid }, token)).rejects.toThrowError("token has been revoked");
   });
 
   test("create and validate feeds token", async () => {
@@ -105,10 +110,27 @@ describe("generate tokens", () => {
   });
 });
 
-// TODO revoke feeds token
-// TODO revoke chat token
-// TODO verify token revocation in feeds
-// TODO verify token revocation in chat
+describe("delete user", () => {
+  // Delete the Firebase user to trigger extension functions
+  beforeAll(async () => {
+    await adminAuth.deleteUser(uid);
+
+    // Wait for triggers to execute
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+  });
+
+  test("verify chat user deletion", async () => {
+    const { users } = await chatServer.queryUsers({ id: uid });
+    const user = users.find((u) => u.id === uid);
+    expect(user).toBeUndefined();
+  });
+
+  test("verify feeds user deletion", async () => {
+    const feeds = stream.connect(process.env.STREAM_API_KEY!, process.env.STREAM_API_SECRET!);
+    await expect(feeds.user(uid).get()).rejects.toThrowError("User does not exist");
+  });
+});
+
 /*
 console.log("Waiting 5 seconds...");
 await new Promise((resolve) => setTimeout(resolve, 5000));
