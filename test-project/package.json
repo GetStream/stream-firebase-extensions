@@ -1,9 +1,14 @@
 {
-  "type": "module",
   "scripts": {
-    "test": "node test/test.mjs"
+    "test": "firebase emulators:exec --project demo-stream 'npx jest --runInBand'"
   },
   "dependencies": {
-    "firebase-admin": "^11.0.0"
+    "@types/jest": "^28.1.3",
+    "dotenv": "^16.0.1",
+    "firebase-admin": "^11.0.0",
+    "jest": "^28.1.1",
+    "stream-chat": "^6.7.0",
+    "ts-jest": "^28.0.5",
+    "typescript": "^4.7.4"
   }
 }
