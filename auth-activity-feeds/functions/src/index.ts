@@ -10,10 +10,13 @@ const serverClient = stream.connect(process.env.STREAM_API_KEY!, process.env.STR
 export const createStreamUser = functions.handler.auth.user.onCreate(async (user) => {
   functions.logger.log("Firebase user created", user);
   // Create user using the serverClient.
+  const nameField = process.env.NAME_FIELD ?? "name";
+  const emailField = process.env.EMAIL_FIELD ?? "email";
+  const imageField = process.env.IMAGE_FIELD ?? "profileImage";
   const response = await serverClient.user(user.uid).create({
-    ...(user.displayName && { [process.env.NAME_FIELD!]: user.displayName }),
-    ...(user.email && { [process.env.EMAIL_FIELD!]: user.email }),
-    ...(user.photoURL && { [process.env.IMAGE_FIELD!]: user.photoURL }),
+    ...(user.displayName && { [nameField]: user.displayName }),
+    ...(user.email && { [emailField]: user.email }),
+    ...(user.photoURL && { [imageField]: user.photoURL }),
   });
   functions.logger.log("Stream user created", response.id, response.data);
 });
