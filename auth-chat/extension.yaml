@@ -97,11 +97,11 @@ resources:
     type: firebaseextensions.v1beta.function
     properties:
       location: ${LOCATION}
-      runtime: nodejs14
+      runtime: nodejs16
       httpsTrigger: {}
   - name: revokeStreamUserToken
     type: firebaseextensions.v1beta.function
     properties:
       location: ${LOCATION}
-      runtime: nodejs14
+      runtime: nodejs16
       httpsTrigger: {}
