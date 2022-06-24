@@ -29,8 +29,12 @@ const api_key = process.env.STREAM_API_KEY!;
 const api_secret = process.env.STREAM_API_SECRET!;
 
 console.log(process.cwd());
-require("fs").readFile("extensions/auth-activity-feeds.env.local", function (err: any, buf: any) {
-  process.stdout.write(buf);
+var lineReader = require("readline").createInterface({
+  input: require("fs").createReadStream("extensions/auth-activity-feeds.env.local"),
+});
+
+lineReader.on("line", function (line: string) {
+  console.log("Line from file:", line);
 });
 console.log("api key", api_key);
 

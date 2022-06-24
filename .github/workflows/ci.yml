@@ -26,12 +26,12 @@ jobs:
     - name: Generate .env.local and .secret.local files
       run: |
           mkdir -p extensions
-          echo $ENV_LOCAL >> extensions/auth-activity-feeds.env.local
-          echo $ENV_LOCAL >> extensions/auth-chat.env.local
-          echo $ENV_LOCAL >> extensions/firestore-activity-feeds.env.local
-          echo $SECRET_LOCAL >> extensions/auth-activity-feeds.secret.local
-          echo $SECRET_LOCAL >> extensions/auth-chat.secret.local
-          echo $SECRET_LOCAL >> extensions/firestore-activity-feeds.secret.local
+          echo $ENV_LOCAL >    extensions/auth-activity-feeds.env.local
+          echo $SECRET_LOCAL > extensions/auth-activity-feeds.secret.local
+          echo $ENV_LOCAL >    extensions/auth-chat.env.local
+          echo $SECRET_LOCAL > extensions/auth-chat.secret.local
+          echo $ENV_LOCAL >    extensions/firestore-activity-feeds.env.local
+          echo $SECRET_LOCAL > extensions/firestore-activity-feeds.secret.local
       working-directory: integration-tests
       env:
         ENV_LOCAL : ${{secrets.ENV_LOCAL}}
