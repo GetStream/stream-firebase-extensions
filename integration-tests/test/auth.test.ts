@@ -29,6 +29,9 @@ const api_key = process.env.STREAM_API_KEY!;
 const api_secret = process.env.STREAM_API_SECRET!;
 
 console.log(process.cwd());
+require("fs").readFile("extensions/auth-activity-feeds.env.local", function (err: any, buf: any) {
+  process.stdout.write(buf);
+});
 console.log("api key", api_key);
 
 const chatServer = new StreamChat(api_key, api_secret);
