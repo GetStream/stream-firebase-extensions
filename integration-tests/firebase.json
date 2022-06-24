@@ -4,11 +4,17 @@
     "auth-chat": "../auth-chat"
   },
   "emulators": {
+    "hub": {
+      "port": 4000
+    },
     "auth": {
       "port": 9099
     },
     "ui": {
       "enabled": true
+    },
+    "functions": {
+      "port": 5001
     }
   }
 }
