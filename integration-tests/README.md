@@ -6,7 +6,9 @@ npm test
 
 ## Locally
 
-You'll need the following files to set the right environment variables
+You'll need the following files to set the right environment variables.
+
+These files are generated automatically in CI using repository secrets.
 
 ### extensions/auth-activity-feeds.env.local
 
