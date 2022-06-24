@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "prepare": "cd .. && pushd auth-activity-feeds/functions && npm i && popd && pushd auth-chat/functions && npm i && popd && pushd firestore-activity-feeds/functions && npm i",
+    "prepare": "cd ../auth-activity-feeds/functions && npm i && cd ../../auth-chat/functions && npm i && cd ../../firestore-activity-feeds/functions && npm i",
     "test": "firebase emulators:exec --project demo-stream 'npx jest'"
   },
   "dependencies": {
