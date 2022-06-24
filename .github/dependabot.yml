@@ -17,3 +17,7 @@ updates:
     directory: "/firestore-activity-feeds/functions"
     schedule:
       interval: "daily"
+  - package-ecosystem: "npm"
+    directory: "/integration-tests"
+    schedule:
+      interval: "daily"
