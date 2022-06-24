@@ -8,7 +8,7 @@
     "dotenv": "^16.0.1",
     "firebase-admin": "^11.0.0",
     "firebase-tools": "^11.1.0",
-    "firebase": "^9.8.3",
+    "firebase": "^9.8.4",
     "getstream": "^8.0.1",
     "jest": "^28.1.1",
     "stream-chat": "^6.7.0",
