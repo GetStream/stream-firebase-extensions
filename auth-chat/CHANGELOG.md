@@ -1,3 +1,9 @@
+## Version 0.2.0
+
+- Use Node v16
+- Round down when setting `iat` on generated tokens
+- Update dependencies
+
 ## Version 0.1.4
 
 Update firebase-functions dependency to fix toJSON bug.

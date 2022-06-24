@@ -1,3 +1,9 @@
+## Version 0.2.0
+
+- Use Node v16
+- Set custom fields correctly when no override provided
+- Update dependencies
+
 ## Version 0.1.3
 
 Update firebase-functions dependency to fix toJSON bug.
