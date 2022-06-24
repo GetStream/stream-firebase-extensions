@@ -1,8 +1,7 @@
 {
   "extensions": {
     "auth-activity-feeds": "../auth-activity-feeds",
-    "auth-chat": "../auth-chat",
-    "firestore-activity-feeds": "../firestore-activity-feeds"
+    "auth-chat": "../auth-chat"
   },
   "emulators": {
     "auth": {
@@ -10,9 +9,6 @@
     },
     "ui": {
       "enabled": true
-    },
-    "firestore": {
-      "port": 8080
     }
   }
 }
