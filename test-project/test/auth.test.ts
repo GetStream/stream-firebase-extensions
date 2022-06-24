@@ -5,7 +5,8 @@ import { initializeApp as initializeFirebaseClient } from "firebase/app";
 import { connectAuthEmulator, getAuth as getAuthClient, signInWithEmailAndPassword } from "firebase/auth";
 import { connectFunctionsEmulator, getFunctions, httpsCallable } from "firebase/functions";
 import * as stream from "getstream";
-import { StreamChat } from "stream-chat";
+import { StreamChat, UserResponse } from "stream-chat";
+import { expectRecent } from "./util";
 
 dotenv.config({ path: "extensions/auth-activity-feeds.env.local" });
 dotenv.config({ path: "extensions/auth-activity-feeds.secret.local" });
@@ -17,8 +18,7 @@ const adminAuth = getAuthAdmin();
 
 const app = initializeFirebaseClient({
   projectId: process.env.GCLOUD_PROJECT,
-  apiKey: "example",
-  authDomain: "blah",
+  apiKey: "fake",
 });
 const functions = getFunctions(app);
 connectFunctionsEmulator(functions, "localhost", 5001);
@@ -88,8 +88,17 @@ describe("generate tokens", () => {
     expect(chatClient.user.name).toBe(name);
     await chatClient.disconnectUser();
 
-    const revokeStreamUserToken = httpsCallable<undefined, string>(functions, "ext-auth-chat-revokeStreamUserToken");
-    await revokeStreamUserToken();
+    type Response = { users: { [key: string]: UserResponse } };
+    const revokeStreamUserToken = httpsCallable<undefined, Response>(functions, "ext-auth-chat-revokeStreamUserToken");
+    const {
+      data: { users },
+    } = await revokeStreamUserToken();
+    expect(users).toHaveProperty(uid);
+    expect(users[uid].name).toBe(name);
+    expectRecent(new Date(users[uid].revoke_tokens_issued_before));
+
+    // Seems we need to wait here to avoid flakiness
+    // await new Promise((resolve) => setTimeout(resolve, 2000));
 
     await expect(chatClient.connectUser({ id: uid }, token)).rejects.toThrowError("token has been revoked");
   });
