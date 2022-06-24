@@ -45,7 +45,7 @@ export const getStreamUserToken = functions.handler.https.onCall((data, context)
       return serverClient.createToken(
         context.auth.uid,
         undefined,
-        Math.round(new Date().getTime() / 1000),
+        Math.floor(new Date().getTime() / 1000),
       );
     } catch (err) {
       console.error(`Unable to get user token with ID ${context.auth.uid} on Stream. Error ${err}`);

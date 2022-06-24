@@ -1,0 +1,18 @@
+{
+  "scripts": {
+    "prepare": "cd ../auth-activity-feeds/functions && npm i && cd ../../auth-chat/functions && npm i && cd ../../firestore-activity-feeds/functions && npm i",
+    "test": "firebase emulators:exec --project demo-stream 'npx jest'"
+  },
+  "dependencies": {
+    "@types/jest": "^28.1.3",
+    "dotenv": "^16.0.1",
+    "firebase-admin": "^11.0.0",
+    "firebase-tools": "^11.1.0",
+    "firebase": "^9.8.3",
+    "getstream": "^8.0.1",
+    "jest": "^28.1.1",
+    "stream-chat": "^6.7.0",
+    "ts-jest": "^28.0.5",
+    "typescript": "^4.7.4"
+  }
+}
