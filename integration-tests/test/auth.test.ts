@@ -28,16 +28,6 @@ connectAuthEmulator(clientAuth, "http://127.0.0.1:9099", { disableWarnings: true
 const api_key = process.env.STREAM_API_KEY!;
 const api_secret = process.env.STREAM_API_SECRET!;
 
-console.log(process.cwd());
-var lineReader = require("readline").createInterface({
-  input: require("fs").createReadStream("extensions/auth-activity-feeds.env.local"),
-});
-
-lineReader.on("line", function (line: string) {
-  console.log("Line from file:", line);
-});
-console.log("api key", api_key);
-
 const chatServer = new StreamChat(api_key, api_secret);
 const chatClient = new StreamChat(api_key, { allowServerSideConnect: true });
 
