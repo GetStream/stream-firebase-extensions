@@ -28,6 +28,7 @@ connectAuthEmulator(clientAuth, "http://127.0.0.1:9099", { disableWarnings: true
 const api_key = process.env.STREAM_API_KEY!;
 const api_secret = process.env.STREAM_API_SECRET!;
 
+console.log(process.cwd());
 console.log("api key", api_key);
 
 const chatServer = new StreamChat(api_key, api_secret);
@@ -103,7 +104,7 @@ describe("generate tokens", () => {
     expectRecent(new Date(users[uid].revoke_tokens_issued_before));
 
     // Seems we need to wait here to avoid flakiness
-    // await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
     await expect(chatClient.connectUser({ id: uid }, token)).rejects.toThrowError("token has been revoked");
   });
