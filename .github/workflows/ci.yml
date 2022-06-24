@@ -10,7 +10,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,6 +20,7 @@ jobs:
       with:
         node-version: 16
         cache: 'npm'
+        cache-dependency-path: integration-tests/package-lock.json
     - run: npm ci
       working-directory: integration-tests
     - run: npm test
