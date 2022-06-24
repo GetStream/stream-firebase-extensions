@@ -25,8 +25,13 @@ connectFunctionsEmulator(functions, "localhost", 5001);
 const clientAuth = getAuthClient(app);
 connectAuthEmulator(clientAuth, "http://127.0.0.1:9099", { disableWarnings: true });
 
-const chatServer = new StreamChat(process.env.STREAM_API_KEY!, process.env.STREAM_API_SECRET!);
-const chatClient = new StreamChat(process.env.STREAM_API_KEY!, { allowServerSideConnect: true });
+const api_key = process.env.STREAM_API_KEY!;
+const api_secret = process.env.STREAM_API_SECRET!;
+
+console.log("api key", api_key);
+
+const chatServer = new StreamChat(api_key, api_secret);
+const chatClient = new StreamChat(api_key, { allowServerSideConnect: true });
 
 // Default jest timeout is 5 secs
 jest.setTimeout(30000);
@@ -65,7 +70,7 @@ describe("create user", () => {
 
   test("verify feeds user creation", async () => {
     // Verify creation of user
-    const feeds = stream.connect(process.env.STREAM_API_KEY!, process.env.STREAM_API_SECRET!);
+    const feeds = stream.connect(api_key, api_secret);
 
     const { data: user } = await feeds.user(uid).get();
     expect(user).not.toBeNull();
@@ -110,7 +115,7 @@ describe("generate tokens", () => {
     );
     const { data: token } = await getStreamUserToken();
 
-    const feeds = stream.connect(process.env.STREAM_API_KEY!, token);
+    const feeds = stream.connect(api_key, token);
     const { data: user } = await feeds.currentUser.get();
     expect(user).not.toBeNull();
     expect(user?.name).toBe(name);
@@ -135,7 +140,7 @@ describe("delete user", () => {
   });
 
   test("verify feeds user deletion", async () => {
-    const feeds = stream.connect(process.env.STREAM_API_KEY!, process.env.STREAM_API_SECRET!);
+    const feeds = stream.connect(api_key, api_secret);
     await expect(feeds.user(uid).get()).rejects.toThrowError("User does not exist");
   });
 });
