@@ -8,10 +8,12 @@ import * as stream from "getstream";
 import { StreamChat, UserResponse } from "stream-chat";
 import { expectRecent } from "./util";
 
+console.log("Loading env vars...");
 dotenv.config({ path: "extensions/auth-activity-feeds.env.local", debug: true });
 dotenv.config({ path: "extensions/auth-activity-feeds.secret.local", debug: true });
-dotenv.config({ path: "extensions/auth-chat.env.local", debug: true });
-dotenv.config({ path: "extensions/auth-chat.secret.local", debug: true });
+const api_key = process.env.STREAM_API_KEY!;
+const api_secret = process.env.STREAM_API_SECRET!;
+console.log(`api_key set: ${!!api_key}`);
 
 initializeFirebaseAdmin();
 const adminAuth = getAuthAdmin();
@@ -24,9 +26,6 @@ const functions = getFunctions(app);
 connectFunctionsEmulator(functions, "localhost", 5001);
 const clientAuth = getAuthClient(app);
 connectAuthEmulator(clientAuth, "http://127.0.0.1:9099", { disableWarnings: true });
-
-const api_key = process.env.STREAM_API_KEY!;
-const api_secret = process.env.STREAM_API_SECRET!;
 
 const chatServer = new StreamChat(api_key, api_secret);
 const chatClient = new StreamChat(api_key, { allowServerSideConnect: true });
