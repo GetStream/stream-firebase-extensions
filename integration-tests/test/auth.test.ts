@@ -8,10 +8,10 @@ import * as stream from "getstream";
 import { StreamChat, UserResponse } from "stream-chat";
 import { expectRecent } from "./util";
 
-dotenv.config({ path: "extensions/auth-activity-feeds.env.local" });
-dotenv.config({ path: "extensions/auth-activity-feeds.secret.local" });
-dotenv.config({ path: "extensions/auth-chat.env.local" });
-dotenv.config({ path: "extensions/auth-chat.secret.local" });
+dotenv.config({ path: "extensions/auth-activity-feeds.env.local", debug: true });
+dotenv.config({ path: "extensions/auth-activity-feeds.secret.local", debug: true });
+dotenv.config({ path: "extensions/auth-chat.env.local", debug: true });
+dotenv.config({ path: "extensions/auth-chat.secret.local", debug: true });
 
 initializeFirebaseAdmin();
 const adminAuth = getAuthAdmin();
