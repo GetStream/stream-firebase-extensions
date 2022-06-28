@@ -4,11 +4,15 @@ import { getAuth as getAuthAdmin } from "firebase-admin/auth";
 import { initializeApp as initializeFirebaseClient } from "firebase/app";
 import { connectAuthEmulator, getAuth as getAuthClient, signInWithEmailAndPassword } from "firebase/auth";
 import { connectFunctionsEmulator, getFunctions, httpsCallable } from "firebase/functions";
+import { existsSync } from "fs";
 import * as stream from "getstream";
 import { StreamChat, UserResponse } from "stream-chat";
 import { expectRecent } from "./util";
 
 console.log("Loading env vars...");
+console.log(`auth-activity-feeds.env.local exists: ${existsSync("extensions/auth-activity-feeds.env.local")}`);
+console.log(`auth-activity-feeds.secret.local exists: ${existsSync("extensions/auth-activity-feeds.secret.local")}`);
+
 dotenv.config({ path: "extensions/auth-activity-feeds.env.local", debug: true });
 dotenv.config({ path: "extensions/auth-activity-feeds.secret.local", debug: true });
 const api_key = process.env.STREAM_API_KEY!;
