@@ -14,16 +14,18 @@ console.log(`auth-activity-feeds.env.local exists: ${existsSync("extensions/auth
 console.log(`auth-activity-feeds.secret.local exists: ${existsSync("extensions/auth-activity-feeds.secret.local")}`);
 
 {
-  const { error } = dotenv.config({ path: "extensions/auth-activity-feeds.env.local", debug: true });
+  const { error, parsed } = dotenv.config({ path: "extensions/auth-activity-feeds.env.local", debug: true });
   if (error) {
     console.error(error);
   }
+  console.log("parsed", parsed);
 }
 {
-  const { error } = dotenv.config({ path: "extensions/auth-activity-feeds.secret.local", debug: true });
+  const { error, parsed } = dotenv.config({ path: "extensions/auth-activity-feeds.secret.local", debug: true });
   if (error) {
     console.error(error);
   }
+  console.log("parsed", parsed);
 }
 const api_key = process.env.STREAM_API_KEY!;
 const api_secret = process.env.STREAM_API_SECRET!;
