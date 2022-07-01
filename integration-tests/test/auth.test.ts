@@ -4,25 +4,20 @@ import { getAuth as getAuthAdmin } from "firebase-admin/auth";
 import { initializeApp as initializeFirebaseClient } from "firebase/app";
 import { connectAuthEmulator, getAuth as getAuthClient, signInWithEmailAndPassword } from "firebase/auth";
 import { connectFunctionsEmulator, getFunctions, httpsCallable } from "firebase/functions";
-import { existsSync, readFileSync } from "fs";
 import * as stream from "getstream";
 import { StreamChat, UserResponse } from "stream-chat";
 import { expectRecent } from "./util";
 
 console.log("Loading env vars...");
 for (const path of ["extensions/auth-activity-feeds.env.local", "extensions/auth-activity-feeds.secret.local"]) {
-  console.log(`${path} exists: ${existsSync(path)}`);
-  console.log(`${path} contains: ${readFileSync(path, { encoding: "utf8" })}`);
-  const { error, parsed } = dotenv.config({ path, debug: true });
+  const { error, parsed } = dotenv.config({ path });
   if (error) {
     console.error(error);
   }
-  console.log("parsed", parsed);
 }
 
 const api_key = process.env.STREAM_API_KEY!;
 const api_secret = process.env.STREAM_API_SECRET!;
-console.log(`api_key set: ${!!api_key}`);
 
 initializeFirebaseAdmin();
 const adminAuth = getAuthAdmin();
