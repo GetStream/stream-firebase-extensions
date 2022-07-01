@@ -10,7 +10,7 @@ import { StreamChat, UserResponse } from "stream-chat";
 import { expectRecent } from "./util";
 
 console.log("Loading env vars...");
-for (const path in ["extensions/auth-activity-feeds.env.local", "extensions/auth-activity-feeds.secret.local"]) {
+for (const path of ["extensions/auth-activity-feeds.env.local", "extensions/auth-activity-feeds.secret.local"]) {
   console.log(`${path} exists: ${existsSync(path)}`);
   console.log(`${path} contains: ${readFileSync(path, { encoding: "utf8" })}`);
   const { error, parsed } = dotenv.config({ path, debug: true });
