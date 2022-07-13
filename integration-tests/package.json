@@ -4,13 +4,13 @@
     "test": "firebase emulators:exec --project demo-stream 'npx jest'"
   },
   "dependencies": {
-    "@types/jest": "^28.1.4",
+    "@types/jest": "^28.1.5",
     "dotenv": "^16.0.1",
     "firebase-admin": "^11.0.0",
     "firebase-tools": "^11.2.2",
     "firebase": "^9.9.0",
     "getstream": "^8.0.1",
-    "jest": "^28.1.2",
+    "jest": "^28.1.3",
     "stream-chat": "^6.7.3",
     "ts-jest": "^28.0.5",
     "typescript": "^4.7.4"
