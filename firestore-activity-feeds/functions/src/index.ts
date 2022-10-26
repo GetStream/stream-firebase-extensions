@@ -77,8 +77,9 @@ function getActivityData(snapshot: DocumentSnapshot): ActivityData | undefined {
 }
 
 // When a user is created in Firebase an associated Stream account is also created.
-export const activitiesToFirestore = functions.handler.firestore.document.onWrite(
-  async (change) => {
+export const activitiesToFirestore = functions.firestore
+  .document(`${process.env.COLLECTION}/{feedId}/{userId}/{foreignId}`)
+  .onWrite(async (change) => {
     if (!change.after.exists) {
       // Delete
 
@@ -118,5 +119,4 @@ export const activitiesToFirestore = functions.handler.firestore.document.onWrit
         functions.logger.log("Failed to create activity", activity, e);
       }
     }
-  },
-);
+  });
