@@ -10,7 +10,7 @@ const serverClient = StreamChat.getInstance(
 );
 
 // When a user is created in Firebase an associated Stream account is also created.
-export const createStreamUser = functions.handler.auth.user.onCreate(async (user) => {
+export const createStreamUser = functions.auth.user().onCreate(async (user) => {
   functions.logger.log("Firebase user created", user);
   // Create user using the serverClient.
   const response = await serverClient.upsertUser({
@@ -24,7 +24,7 @@ export const createStreamUser = functions.handler.auth.user.onCreate(async (user
 });
 
 // When a user is deleted from Firebase their associated Stream account is also deleted.
-export const deleteStreamUser = functions.handler.auth.user.onDelete(async (user) => {
+export const deleteStreamUser = functions.auth.user().onDelete(async (user) => {
   functions.logger.log("Firebase user deleted", user);
   const response = await serverClient.deleteUser(user.uid);
   functions.logger.log("Stream user deleted", response);
@@ -32,7 +32,7 @@ export const deleteStreamUser = functions.handler.auth.user.onDelete(async (user
 });
 
 // Get Stream user token.
-export const getStreamUserToken = functions.handler.https.onCall((data, context) => {
+export const getStreamUserToken = functions.https.onCall((data, context) => {
   // Checking that the user is authenticated.
   if (!context.auth) {
     // Throwing an HttpsError so that the client gets the error details.
@@ -56,7 +56,7 @@ export const getStreamUserToken = functions.handler.https.onCall((data, context)
 });
 
 // Revoke the authenticated user's Stream chat token.
-export const revokeStreamUserToken = functions.handler.https.onCall((data, context) => {
+export const revokeStreamUserToken = functions.https.onCall((data, context) => {
   // Checking that the user is authenticated.
   if (!context.auth) {
     // Throwing an HttpsError so that the client gets the error details.
