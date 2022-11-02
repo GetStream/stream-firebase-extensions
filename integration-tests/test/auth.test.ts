@@ -8,7 +8,6 @@ import * as stream from "getstream";
 import { StreamChat, UserResponse } from "stream-chat";
 import { expectRecent } from "./util";
 
-console.log("Loading env vars...");
 for (const path of ["extensions/auth-activity-feeds.env.local", "extensions/auth-activity-feeds.secret.local"]) {
   const { error, parsed } = dotenv.config({ path });
   if (error) {
