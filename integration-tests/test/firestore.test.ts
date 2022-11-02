@@ -44,7 +44,7 @@ describe("create firestore document", () => {
             await docRef.delete();
         }
 
-        await firestore.doc(`${collectionId}/${feedType}/${feedId}/${foreignId}`).create({ actor, verb, object });
+        await docRef.create({ actor, verb, object });
 
         // Wait for triggers to execute
         await new Promise((resolve) => setTimeout(resolve, 2000));
