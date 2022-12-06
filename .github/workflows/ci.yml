@@ -19,8 +19,6 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 16
-        cache: 'npm'
-        cache-dependency-path: integration-tests/package-lock.json
     - run: npm ci
       working-directory: integration-tests
     - name: Generate .env.local and .secret.local files
