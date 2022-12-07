@@ -4,7 +4,7 @@
         "test": "firebase emulators:exec --project demo-stream --debug 'npx jest'"
     },
     "dependencies": {
-        "@types/jest": "^29.2.3",
+        "@types/jest": "^29.2.4",
         "dotenv": "^16.0.3",
         "firebase-admin": "^11.3.0",
         "firebase-tools": "^11.16.1",
