@@ -8,16 +8,16 @@ updates:
   - package-ecosystem: "npm"
     directory: "/auth-activity-feeds/functions"
     schedule:
-      interval: "daily"
+      interval: "weekly"
   - package-ecosystem: "npm"
     directory: "/auth-chat/functions"
     schedule:
-      interval: "daily"
+      interval: "weekly"
   - package-ecosystem: "npm"
     directory: "/firestore-activity-feeds/functions"
     schedule:
-      interval: "daily"
+      interval: "weekly"
   - package-ecosystem: "npm"
     directory: "/integration-tests"
     schedule:
-      interval: "daily"
+      interval: "weekly"
