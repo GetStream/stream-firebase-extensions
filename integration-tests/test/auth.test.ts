@@ -25,7 +25,7 @@ const app = initializeFirebaseClient({
   projectId: process.env.GCLOUD_PROJECT,
   apiKey: "fake",
 });
-const functions = getFunctions(app);
+const functions = getFunctions(app, process.env.LOCATION);
 connectFunctionsEmulator(functions, "localhost", 5001);
 const clientAuth = getAuthClient(app);
 connectAuthEmulator(clientAuth, "http://127.0.0.1:9099", { disableWarnings: true });

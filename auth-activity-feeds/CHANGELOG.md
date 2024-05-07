@@ -1,3 +1,7 @@
+## Version 0.2.1
+
+- Use Node v18
+
 ## Version 0.2.0
 
 - Use Node v16
