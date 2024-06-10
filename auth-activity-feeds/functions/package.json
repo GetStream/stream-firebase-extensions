@@ -26,7 +26,7 @@
     "eslint": "^8.30.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-import": "^2.29.1",
     "firebase-functions-test": "^3.0.0",
     "prettier": "^2.8.1"
   },
