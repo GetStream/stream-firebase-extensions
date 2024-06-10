@@ -5,7 +5,7 @@
     },
     "dependencies": {
         "@types/jest": "^29.2.4",
-        "dotenv": "^16.0.3",
+        "dotenv": "^16.4.5",
         "firebase": "^9.15.0",
         "firebase-admin": "^11.4.0",
         "firebase-tools": "^11.19.0",
