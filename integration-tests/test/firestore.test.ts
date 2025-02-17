@@ -39,6 +39,10 @@ describe('create firestore document', () => {
       )
     );
 
+    console.log(
+      '[TEMP] Collection:',
+      `${collectionId}/${feedType}/${feedId}/${foreignId}`
+    );
     const docRef = firestore.doc(
       `${collectionId}/${feedType}/${feedId}/${foreignId}`
     );
