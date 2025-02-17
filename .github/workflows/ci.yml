@@ -36,3 +36,5 @@ jobs:
         SECRET_LOCAL : ${{secrets.SECRET_LOCAL}}
     - run: npm test
       working-directory: integration-tests
+      env:
+        COLLECTION: feeds

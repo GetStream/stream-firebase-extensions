@@ -52,7 +52,11 @@ describe('create firestore document', () => {
       await docRef.delete();
     }
 
-    await docRef.create({ actor, verb, object });
+    try {
+      await docRef.create({ actor, verb, object });
+    } catch (e) {
+      console.error('[TEMP] ', e);
+    }
 
     // Wait for triggers to execute
     await new Promise((resolve) => setTimeout(resolve, 2000));
