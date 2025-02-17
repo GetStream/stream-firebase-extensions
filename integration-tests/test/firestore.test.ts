@@ -16,7 +16,7 @@ for (const path of [
 
 const api_key = process.env.STREAM_API_KEY!;
 const api_secret = process.env.STREAM_API_SECRET!;
-const collectionId = process.env.COLLECTION!;
+const collectionId = process.env.COLLECTION ?? 'feeds';
 initializeApp();
 const firestore = getFirestore();
 
