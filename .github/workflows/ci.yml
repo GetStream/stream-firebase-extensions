@@ -30,11 +30,9 @@ jobs:
           echo "$SECRET_LOCAL" > extensions/auth-chat.secret.local
           echo "$ENV_LOCAL" >    extensions/firestore-activity-feeds.env.local
           echo "$SECRET_LOCAL" > extensions/firestore-activity-feeds.secret.local
-          echo "$COLLECTION" >   extensions/firestore-activity-feeds.env.local
       working-directory: integration-tests
       env:
         ENV_LOCAL : ${{secrets.ENV_LOCAL}}
         SECRET_LOCAL : ${{secrets.SECRET_LOCAL}}
-        COLLECTION: feeds
     - run: npm test
       working-directory: integration-tests
