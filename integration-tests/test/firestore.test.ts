@@ -17,8 +17,6 @@ for (const path of [
 const api_key = process.env.STREAM_API_KEY!;
 const api_secret = process.env.STREAM_API_SECRET!;
 const collectionId = process.env.COLLECTION ?? 'feeds';
-initializeApp();
-const firestore = getFirestore();
 
 const feedType = 'user';
 const feedId = '1';
@@ -28,7 +26,13 @@ const verb = 'run';
 const object = 'exercise:42';
 
 describe('create firestore document', () => {
+  let firestore: FirebaseFirestore.Firestore;
+
   beforeAll(async () => {
+    // Initialize Firebase tools
+    initializeApp();
+    firestore = getFirestore();
+
     // Clear all activities
     const streamClient = stream.connect(api_key, api_secret);
     const user1 = streamClient.feed(feedType, feedId);
@@ -38,7 +42,24 @@ describe('create firestore document', () => {
         user1.removeActivity(r.id)
       )
     );
+  });
 
+  test('verify no activities', async () => {
+    // Given
+
+    // When
+
+    // Then
+    const streamClient = stream.connect(api_key, api_secret);
+    const user1 = streamClient.feed(feedType, feedId);
+    const response = await user1.get();
+    expect(response.results).toMatchObject([]);
+  });
+
+  test('verify activity creation', async () => {
+    // Given
+
+    // When
     console.log(
       '[TEMP] Collection:',
       `${collectionId}/${feedType}/${feedId}/${foreignId}`
@@ -52,17 +73,12 @@ describe('create firestore document', () => {
       await docRef.delete();
     }
 
-    try {
-      await docRef.create({ actor, verb, object });
-    } catch (e) {
-      console.error('[TEMP] ', e);
-    }
+    await docRef.create({ actor, verb, object });
 
     // Wait for triggers to execute
     await new Promise((resolve) => setTimeout(resolve, 2000));
-  });
 
-  test('verify activity creation', async () => {
+    // Then
     const streamClient = stream.connect(api_key, api_secret);
     const user1 = streamClient.feed(feedType, feedId);
     const response = await user1.get();
