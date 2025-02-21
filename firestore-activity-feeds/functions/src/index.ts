@@ -76,7 +76,16 @@ function getActivityData(snapshot: DocumentSnapshot): ActivityData | undefined {
   };
 }
 
-// When a user is created in Firebase an associated Stream account is also created.
+/**
+ * When an activity is created in Firestore, it is also created in Stream.
+ * It specifically listens to the COLLECTION environment variable (default: feeds)
+ * and expects the following structure:
+ *
+ * {COLLECTION}/{feedId}/{userId}/{foreignId}
+ *
+ * When a document is created, it is added to the stream feed as an activity.
+ *
+ */
 export const activitiesToFirestore = functions.firestore
   .document(`${process.env.COLLECTION}/{feedId}/{userId}/{foreignId}`)
   .onWrite(async (change) => {
