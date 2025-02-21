@@ -4,6 +4,9 @@
     "auth-chat": "../auth-chat",
     "firestore-activity-feeds": "../firestore-activity-feeds"
   },
+  "functions": {
+    "source": "../auth-chat/functions"
+  },
   "emulators": {
     "hub": {
       "port": 4000
@@ -13,6 +16,9 @@
     },
     "firestore": {
       "port": 8080
+    },
+    "functions": {
+      "port": 5001
     },
     "ui": {
       "enabled": true
