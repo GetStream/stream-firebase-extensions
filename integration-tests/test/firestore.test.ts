@@ -18,7 +18,7 @@ const api_key = process.env.STREAM_API_KEY!;
 const api_secret = process.env.STREAM_API_SECRET!;
 const collectionId = process.env.COLLECTION ?? 'feeds';
 
-const feedType = 'user';
+const userId = 'user';
 const feedId = '1';
 const foreignId = 'run_1';
 const actor = 'user:1';
@@ -35,7 +35,7 @@ describe('create firestore document', () => {
 
     // Clear all activities
     const streamClient = stream.connect(api_key, api_secret);
-    const user1 = streamClient.feed(feedType, feedId);
+    const user1 = streamClient.feed(userId, feedId);
     const allActivities = await user1.get();
     await Promise.all(
       allActivities.results.map((r: FeedAPIResponse['results'][number]) =>
@@ -51,7 +51,7 @@ describe('create firestore document', () => {
 
     // Then
     const streamClient = stream.connect(api_key, api_secret);
-    const user1 = streamClient.feed(feedType, feedId);
+    const user1 = streamClient.feed(userId, feedId);
     const response = await user1.get();
     expect(response.results).toMatchObject([]);
   });
@@ -60,13 +60,9 @@ describe('create firestore document', () => {
     // Given
 
     // When
-    console.log(
-      '[TEMP] Collection:',
-      `${collectionId}/${feedType}/${feedId}/${foreignId}`
-    );
-    const docRef = firestore.doc(
-      `${collectionId}/${feedType}/${feedId}/${foreignId}`
-    );
+    const collectionPath = `${collectionId}/${feedId}/${userId}/${foreignId}`;
+    console.log('[TEMP] Collection:', collectionPath);
+    const docRef = firestore.doc(collectionPath);
     const doc = await docRef.get();
     if (doc.exists) {
       console.log(`Deleting existing doc ${doc}`);
@@ -80,7 +76,7 @@ describe('create firestore document', () => {
 
     // Then
     const streamClient = stream.connect(api_key, api_secret);
-    const user1 = streamClient.feed(feedType, feedId);
+    const user1 = streamClient.feed(userId, feedId);
     const response = await user1.get();
     expect(response.results).toMatchObject([{ actor, verb, object }]);
   });
