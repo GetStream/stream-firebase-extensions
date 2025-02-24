@@ -60,7 +60,8 @@ describe('create firestore document', () => {
     // Given
 
     // When
-    const collectionPath = `${collectionId}/${feedId}/${userId}/${foreignId}`;
+    // const collectionPath = `${collectionId}/${feedId}/${userId}/${foreignId}`;
+    const collectionPath = `${collectionId}/${feedId}/${userId}`;
     console.log('[TEMP] Collection:', collectionPath);
 
     console.log('[TEMP] Collection path components:', {
