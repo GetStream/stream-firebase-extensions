@@ -39,18 +39,20 @@ describe('Token Generation', () => {
       throw new Error('STREAM_API_KEY and STREAM_API_SECRET must be set');
     }
 
-    // Initialize Firebase Admin
-    initializeApp();
+    // Initialize Firebase Admin with explicit project ID
+    initializeApp({
+      projectId: 'demo-stream',
+    });
     auth = getAuth();
 
     // Initialize Firebase Client
     const app = initializeFirebaseClient({
-      projectId: process.env.GCLOUD_PROJECT,
+      projectId: 'demo-stream',
       apiKey: 'fake-api-key',
     });
 
     // Setup Functions emulator
-    functions = getFunctions(app);
+    functions = getFunctions(app, 'europe-west1'); // Specify the region here
     connectFunctionsEmulator(functions, '127.0.0.1', 5001);
 
     // Setup Auth emulator
