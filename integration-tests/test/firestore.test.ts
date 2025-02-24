@@ -81,20 +81,6 @@ describe('create firestore document', () => {
 
     // When
     const collectionPath = `${collectionId}/${feedId}/${userId}/${foreignId}`;
-    console.log('[TEMP] Collection:', collectionPath);
-
-    console.log('[TEMP] Collection path components:', {
-      collectionId,
-      feedId,
-      userId,
-      foreignId,
-    });
-    console.log('[TEMP] Full path:', collectionPath);
-    console.log('[TEMP] Path length:', collectionPath.length);
-    console.log(
-      '[TEMP] Path characters:',
-      Array.from(collectionPath).map((c) => `${c} (${c.charCodeAt(0)})`)
-    );
     const docRef = firestore.doc(collectionPath);
     const doc = await docRef.get();
     if (doc.exists) {
@@ -132,7 +118,10 @@ describe('create firestore document', () => {
     ]);
 
     // When
-    await docRef.delete();
+    const doc = await docRef.get();
+    if (doc.exists) {
+      await docRef.delete();
+    }
 
     // Wait for triggers to execute
     await new Promise((resolve) => setTimeout(resolve, 2000));
