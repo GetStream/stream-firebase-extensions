@@ -20,7 +20,7 @@ const collectionId = process.env.COLLECTION ?? 'feeds';
 
 const feedId = 'user';
 const userId = '1';
-const foreignId = 'run_1';
+const foreignId = 'run_one';
 const actor = 'user:1';
 const verb = 'run';
 const object = 'exercise:42';
