@@ -5,7 +5,8 @@
     "firestore-activity-feeds": "../firestore-activity-feeds"
   },
   "functions": {
-    "source": "../auth-chat/functions"
+    "source": "../auth-chat/functions",
+    "region": "europe-west1"
   },
   "emulators": {
     "hub": {
