@@ -60,7 +60,9 @@ describe('Token Generation', () => {
     connectAuthEmulator(clientAuth, 'http://127.0.0.1:9099');
 
     // Initialize Stream client
-    streamClient = new StreamChat(api_key, api_secret);
+    streamClient = new StreamChat(api_key, api_secret, {
+      allowServerSideConnect: true,
+    });
   });
 
   afterEach(async () => {
