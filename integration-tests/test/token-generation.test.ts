@@ -62,6 +62,26 @@ describe('Token Generation', () => {
     });
   });
 
+  afterAll(async () => {
+    // Disconnect the Stream client to prevent hanging connections
+    if (streamClient) {
+      await streamClient.disconnectUser();
+      // Force close any remaining connections
+      streamClient.closeConnection();
+    }
+
+    // Sign out any authenticated users
+    const clientAuth = getClientAuth();
+    await clientAuth.signOut();
+  });
+
+  afterEach(async () => {
+    // Ensure Stream client is disconnected after each test
+    if (streamClient && streamClient.user) {
+      await streamClient.disconnectUser();
+    }
+  });
+
   test('should generate and validate Stream token for authenticated user', async () => {
     // Create a test user
     const userRecord = await createUser(auth);
@@ -83,6 +103,11 @@ describe('Token Generation', () => {
       expect(streamClient.user.name).toBe(displayName);
     } catch (error) {
       console.error(error);
+    } finally {
+      // Clean up Stream connection
+      if (streamClient.user) {
+        await streamClient.disconnectUser();
+      }
     }
 
     // Clean up
