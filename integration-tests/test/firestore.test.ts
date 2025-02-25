@@ -8,7 +8,7 @@ for (const path of [
   'extensions/firestore-activity-feeds.env.local',
   'extensions/firestore-activity-feeds.secret.local',
 ]) {
-  const { error, parsed } = dotenv.config({ path });
+  const { error } = dotenv.config({ path });
   if (error) {
     console.error(error);
   }

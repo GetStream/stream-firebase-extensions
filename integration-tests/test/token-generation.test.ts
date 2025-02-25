@@ -1,10 +1,7 @@
 import { Functions, httpsCallable } from 'firebase/functions';
-import { createUser, displayName, email, expectRecent, password } from './util';
+import { createUser, displayName, email, password } from './util';
 import { initializeApp } from 'firebase-admin/app';
-import {
-  getApp,
-  initializeApp as initializeFirebaseClient,
-} from 'firebase/app';
+import { initializeApp as initializeFirebaseClient } from 'firebase/app';
 import { Auth, getAuth } from 'firebase-admin/auth';
 import { getFunctions, connectFunctionsEmulator } from 'firebase/functions';
 import {
@@ -12,7 +9,7 @@ import {
   signInWithEmailAndPassword,
   connectAuthEmulator,
 } from 'firebase/auth';
-import { StreamChat, UserResponse } from 'stream-chat';
+import { StreamChat } from 'stream-chat';
 import * as dotenv from 'dotenv';
 
 describe('Token Generation', () => {
@@ -63,10 +60,6 @@ describe('Token Generation', () => {
     streamClient = new StreamChat(api_key, api_secret, {
       allowServerSideConnect: true,
     });
-  });
-
-  afterEach(async () => {
-    await streamClient.disconnectUser();
   });
 
   test('should generate and validate Stream token for authenticated user', async () => {
