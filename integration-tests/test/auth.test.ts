@@ -54,6 +54,22 @@ describe('User Creation Tests', () => {
     }
   });
 
+  afterAll(async () => {
+    // Clean up Stream client connections
+    if (streamClient) {
+      try {
+        // Disconnect any connected users
+        if (streamClient.user) {
+          await streamClient.disconnectUser();
+        }
+        // Close the connection
+        streamClient.closeConnection();
+      } catch (error) {
+        console.error('Error during Stream client cleanup:', error);
+      }
+    }
+  });
+
   afterEach(async () => {
     const { users } = await streamClient.queryUsers({ email: email });
     for (const user of users) {
@@ -141,6 +157,22 @@ describe('User Deletion Tests', () => {
     for (const userRecord of userRecords.users) {
       if (userRecord.email === email) {
         await auth.deleteUser(userRecord.uid);
+      }
+    }
+  });
+
+  afterAll(async () => {
+    // Clean up Stream client connections
+    if (streamClient) {
+      try {
+        // Disconnect any connected users
+        if (streamClient.user) {
+          await streamClient.disconnectUser();
+        }
+        // Close the connection
+        streamClient.closeConnection();
+      } catch (error) {
+        console.error('Error during Stream client cleanup:', error);
       }
     }
   });

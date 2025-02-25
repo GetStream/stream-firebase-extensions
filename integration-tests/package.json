@@ -1,10 +1,10 @@
 {
   "scripts": {
     "prepare": "cd ../auth-activity-feeds/functions && npm i && cd ../../auth-chat/functions && npm i && cd ../../firestore-activity-feeds/functions && npm i",
-    "test": "firebase emulators:exec --project demo-stream --debug 'npx jest --runInBand'",
-    "test-token-generation": "firebase emulators:exec --project demo-stream --debug 'npx jest token-generation.test.ts --runInBand'",
-    "test-auth": "firebase emulators:exec --project demo-stream --debug 'npx jest auth.test.ts --runInBand'",
-    "test-firestore": "firebase emulators:exec --project demo-stream --debug 'npx jest firestore.test.ts --runInBand'"
+    "test": "firebase emulators:exec --project demo-stream --debug --log-verbosity SILENT 'npx jest --runInBand --detectOpenHandles --forceExit'",
+    "test-token-generation": "firebase emulators:exec --project demo-stream --debug 'npx jest token-generation.test.ts --runInBand --detectOpenHandles --forceExit'",
+    "test-auth": "firebase emulators:exec --project demo-stream --debug 'npx jest auth.test.ts --runInBand --detectOpenHandles --forceExit'",
+    "test-firestore": "firebase emulators:exec --project demo-stream --debug 'npx jest firestore.test.ts --runInBand --detectOpenHandles --forceExit'"
   },
   "dependencies": {
     "@types/jest": "^29.5.14",
