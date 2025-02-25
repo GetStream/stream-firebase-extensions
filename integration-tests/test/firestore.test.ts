@@ -25,16 +25,18 @@ const actor = 'user:1';
 const verb = 'run';
 const object = 'exercise:42';
 
-describe('create firestore document', () => {
+initializeApp();
+
+describe('Firestore Activity Feeds tests', () => {
   let firestore: FirebaseFirestore.Firestore;
+  let streamClient: stream.StreamClient;
 
   beforeAll(async () => {
     // Initialize Firebase tools
-    initializeApp();
     firestore = getFirestore();
 
     // Clear all activities
-    const streamClient = stream.connect(api_key, api_secret);
+    streamClient = stream.connect(api_key, api_secret);
     const user1 = streamClient.feed(feedId, userId);
     const allActivities = await user1.get();
     await Promise.all(
@@ -98,6 +100,29 @@ describe('create firestore document', () => {
     const user1 = streamClient.feed(feedId, userId);
     const response = await user1.get();
     expect(response.results).toMatchObject([{ actor, verb, object }]);
+  });
+
+  test('verify activity update', async () => {
+    // Given
+    const collectionPath = `${collectionId}/${feedId}/${userId}/${foreignId}`;
+    const docRef = firestore.doc(collectionPath);
+    const doc = await docRef.get();
+    if (doc.exists) {
+      console.log(`Deleting existing doc ${doc}`);
+      await docRef.delete();
+    }
+
+    await docRef.create({ actor, verb, object });
+
+    // When
+    await docRef.update({ verb: 'jumped' });
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    // Then
+    const streamClient = stream.connect(api_key, api_secret);
+    const user1 = streamClient.feed(feedId, userId);
+    const response = await user1.get();
+    expect(response.results).toMatchObject([{ actor, verb: 'jumped', object }]);
   });
 
   test('verify activity deletion', async () => {
