@@ -9,7 +9,7 @@ for (const path of [
   'extensions/auth-activity-feeds.env.local',
   'extensions/auth-activity-feeds.secret.local',
 ]) {
-  const { error, parsed } = dotenv.config({ path });
+  const { error } = dotenv.config({ path });
   if (error) {
     console.error(error);
   }
