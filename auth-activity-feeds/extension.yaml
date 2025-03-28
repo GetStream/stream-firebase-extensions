@@ -1,5 +1,5 @@
 name: auth-activity-feeds
-version: 0.2.0
+version: 0.2.1
 specVersion: v1beta  # Firebase Extensions specification version (do not edit)
 
 displayName: Authenticate with Stream Feeds
