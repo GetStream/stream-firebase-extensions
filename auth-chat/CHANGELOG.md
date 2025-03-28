@@ -1,3 +1,8 @@
+## Version 0.2.1
+
+- Update to Node v20
+- Update dependencies
+
 ## Version 0.2.0
 
 - Use Node v16
