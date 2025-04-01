@@ -70,7 +70,7 @@ params:
   - param: STREAM_API_KEY
     label: API key for the Stream API
     description: What is your Stream API key?
-    type: string
+    type: secret
     required: true
   - param: STREAM_API_SECRET
     label: API secret for the Stream API
