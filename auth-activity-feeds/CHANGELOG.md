@@ -1,3 +1,7 @@
+## Version 0.2.2
+
+Make STREAM_API_KEY parameter a secret
+
 ## Version 0.2.1
 
 - Update to Node v20
