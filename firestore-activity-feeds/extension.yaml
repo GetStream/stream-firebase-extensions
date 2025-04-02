@@ -1,5 +1,5 @@
 name: firestore-activity-feeds
-version: 0.2.2
+version: 0.2.3
 specVersion: v1beta  # Firebase Extensions specification version (do not edit)
 
 displayName: Sync Firestore with Activity Feeds
@@ -89,6 +89,7 @@ resources:
     type: firebaseextensions.v1beta.function
     properties:
       location: ${LOCATION}
+      runtime: nodejs22
       eventTrigger:
         eventType: providers/cloud.firestore/eventTypes/document.write
         resource: projects/${PROJECT_ID}/databases/(default)/documents/${COLLECTION}/{feedId}/{userId}/{foreignId}
