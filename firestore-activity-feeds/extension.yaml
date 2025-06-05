@@ -89,7 +89,7 @@ resources:
     type: firebaseextensions.v1beta.function
     properties:
       location: ${LOCATION}
-      runtime: nodejs22
+      runtime: nodejs18
       eventTrigger:
         eventType: providers/cloud.firestore/eventTypes/document.write
         resource: projects/${PROJECT_ID}/databases/(default)/documents/${COLLECTION}/{feedId}/{userId}/{foreignId}
