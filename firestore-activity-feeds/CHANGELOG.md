@@ -1,3 +1,8 @@
+## Version 0.2.4
+
+- Ensure all cloud functions run on Node v18
+- Newer Node version (specifically v22) lead to integration issues
+
 ## Version 0.2.3
 
 - Update to Node v22
