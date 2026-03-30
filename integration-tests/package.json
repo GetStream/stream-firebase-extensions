@@ -7,13 +7,13 @@
     "test-firestore": "sh -c 'cp \"extensions/firestore-activity-feeds.env.local\" \"../firestore-activity-feeds/functions/.env.local\" && cp \"extensions/firestore-activity-feeds.secret.local\" \"../firestore-activity-feeds/functions/.secret.local\" && firebase emulators:exec --only firestore,functions --project demo-stream --config firebase.firestore.json --log-verbosity SILENT \"npx jest firestore.test.ts --runInBand --detectOpenHandles --forceExit\"; rc=$?; rm -f \"../firestore-activity-feeds/functions/.env.local\" \"../firestore-activity-feeds/functions/.secret.local\"; exit $rc'"
   },
   "dependencies": {
-    "@types/jest": "^29.5.14",
+    "@types/jest": "^30.0.0",
     "dotenv": "^17.3.1",
     "firebase": "^12.11.0",
     "firebase-admin": "^13.7.0",
     "firebase-tools": "^15.12.0",
     "getstream": "^8.12.1",
-    "jest": "^29.7.0",
+    "jest": "^30.3.0",
     "stream-chat": "^9.38.0",
     "ts-jest": "^29.4.6",
     "typescript": "^5.9.3"
