@@ -1,5 +1,5 @@
 name: auth-chat
-version: 0.2.4
+version: 0.2.5
 specVersion: v1beta  # Firebase Extensions specification version (do not edit)
 
 displayName: Authenticate with Stream Chat
@@ -83,7 +83,7 @@ resources:
     type: firebaseextensions.v1beta.function
     properties:
       location: ${LOCATION}
-      runtime: nodejs18
+      runtime: nodejs22
       eventTrigger:
         eventType: providers/firebase.auth/eventTypes/user.create
         resource: projects/${PROJECT_ID}
@@ -91,7 +91,7 @@ resources:
     type: firebaseextensions.v1beta.function
     properties:
       location: ${LOCATION}
-      runtime: nodejs18
+      runtime: nodejs22
       eventTrigger:
         eventType: providers/firebase.auth/eventTypes/user.delete
         resource: projects/${PROJECT_ID}
@@ -99,11 +99,11 @@ resources:
     type: firebaseextensions.v1beta.function
     properties:
       location: ${LOCATION}
-      runtime: nodejs18
+      runtime: nodejs22
       httpsTrigger: {}
   - name: revokeStreamUserToken
     type: firebaseextensions.v1beta.function
     properties:
       location: ${LOCATION}
-      runtime: nodejs18
+      runtime: nodejs22
       httpsTrigger: {}
