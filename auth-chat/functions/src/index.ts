@@ -12,13 +12,14 @@ const serverClient = StreamChat.getInstance(
 // When a user is created in Firebase an associated Stream account is also created.
 export const createStreamUser = functions.auth.user().onCreate(async (user) => {
   functions.logger.log("Firebase user created", user);
-  // Create user using the serverClient.
-  const response = await serverClient.upsertUser({
+  // Stream Chat v9 keeps custom fields, but its default UserResponse typing no longer includes `email`.
+  const streamUser = {
     id: user.uid,
-    name: user.displayName,
-    email: user.email,
-    image: user.photoURL,
-  });
+    name: user.displayName ?? undefined,
+    email: user.email ?? undefined,
+    image: user.photoURL ?? undefined,
+  } as unknown as Parameters<typeof serverClient.upsertUser>[0];
+  const response = await serverClient.upsertUser(streamUser);
   functions.logger.log("Stream user created", response);
   return response;
 });

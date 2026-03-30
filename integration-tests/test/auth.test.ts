@@ -5,6 +5,17 @@ import * as dotenv from 'dotenv';
 import { createUser, displayName, email, photoUrl } from './util';
 import { connect as connectToFeeds } from 'getstream';
 
+type StreamUserWithEmail = {
+  id: string;
+  email?: string;
+  name?: string;
+  image?: string;
+};
+
+async function queryUsersByEmail(streamClient: StreamChat, userEmail: string) {
+  return streamClient.queryUsers({ email: userEmail } as any);
+}
+
 for (const path of [
   'extensions/auth-activity-feeds.env.local',
   'extensions/auth-activity-feeds.secret.local',
@@ -40,7 +51,7 @@ describe('User Creation Tests', () => {
     streamClient = new StreamChat(apiKey, apiSecret);
 
     // Remove all Stream users with the given mail
-    const { users } = await streamClient.queryUsers({ email: email });
+    const { users } = await queryUsersByEmail(streamClient, email);
     for (const user of users) {
       await streamClient.deleteUser(user.id);
     }
@@ -71,7 +82,7 @@ describe('User Creation Tests', () => {
   });
 
   afterEach(async () => {
-    const { users } = await streamClient.queryUsers({ email: email });
+    const { users } = await queryUsersByEmail(streamClient, email);
     for (const user of users) {
       await streamClient.deleteUser(user.id);
     }
@@ -90,7 +101,7 @@ describe('User Creation Tests', () => {
     // When
 
     // Then
-    const { users } = await streamClient.queryUsers({ email: email });
+    const { users } = await queryUsersByEmail(streamClient, email);
     expect(users.length).toBe(0);
   });
 
@@ -104,7 +115,7 @@ describe('User Creation Tests', () => {
 
     // Then
     const { users } = await streamClient.queryUsers({ id: userId });
-    const user = users.find((u) => u.id === userId);
+    const user = users.find((u) => u.id === userId) as StreamUserWithEmail | undefined;
     expect(user).not.toBeUndefined();
     expect(user?.email).toBe(email);
     expect(user?.name).toBe(displayName);
