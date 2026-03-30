@@ -2,9 +2,9 @@
   "scripts": {
     "prepare": "npm install --prefix ../auth-activity-feeds/functions && npm install --prefix ../auth-chat/functions && npm install --prefix ../firestore-activity-feeds/functions",
     "test": "npm run test-auth && npm run test-token-generation && npm run test-firestore",
-    "test-token-generation": "npx -y firebase-tools@latest emulators:exec --project demo-stream --log-verbosity SILENT 'npx jest token-generation.test.ts --runInBand --detectOpenHandles --forceExit'",
-    "test-auth": "npx -y firebase-tools@latest emulators:exec --project demo-stream --log-verbosity SILENT 'npx jest auth.test.ts --runInBand --detectOpenHandles --forceExit'",
-    "test-firestore": "sh -c 'cp \"extensions/firestore-activity-feeds.env.local\" \"../firestore-activity-feeds/functions/.env.local\" && cp \"extensions/firestore-activity-feeds.secret.local\" \"../firestore-activity-feeds/functions/.secret.local\" && npx -y firebase-tools@latest emulators:exec --project demo-stream --config firebase.firestore.json --log-verbosity SILENT \"npx jest firestore.test.ts --runInBand --detectOpenHandles --forceExit\"; rc=$?; rm -f \"../firestore-activity-feeds/functions/.env.local\" \"../firestore-activity-feeds/functions/.secret.local\"; exit $rc'"
+    "test-token-generation": "firebase emulators:exec --only auth,functions --project demo-stream --log-verbosity SILENT 'npx jest token-generation.test.ts --runInBand --detectOpenHandles --forceExit'",
+    "test-auth": "firebase emulators:exec --only auth,functions --project demo-stream --log-verbosity SILENT 'npx jest auth.test.ts --runInBand --detectOpenHandles --forceExit'",
+    "test-firestore": "sh -c 'cp \"extensions/firestore-activity-feeds.env.local\" \"../firestore-activity-feeds/functions/.env.local\" && cp \"extensions/firestore-activity-feeds.secret.local\" \"../firestore-activity-feeds/functions/.secret.local\" && firebase emulators:exec --only firestore,functions --project demo-stream --config firebase.firestore.json --log-verbosity SILENT \"npx jest firestore.test.ts --runInBand --detectOpenHandles --forceExit\"; rc=$?; rm -f \"../firestore-activity-feeds/functions/.env.local\" \"../firestore-activity-feeds/functions/.secret.local\"; exit $rc'"
   },
   "dependencies": {
     "@types/jest": "^29.5.14",
