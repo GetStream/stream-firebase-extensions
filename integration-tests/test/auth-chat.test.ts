@@ -11,6 +11,12 @@ type StreamUserWithEmail = {
   image?: string;
 };
 
+const STREAM_SYNC_TIMEOUT_MS = 10000;
+const STREAM_SYNC_TEST_TIMEOUT_MS = 15000;
+const STREAM_SYNC_POLL_INTERVAL_MS = 250;
+
+jest.setTimeout(STREAM_SYNC_TEST_TIMEOUT_MS);
+
 for (const path of [
   'extensions/auth-chat.env.local',
   'extensions/auth-chat.secret.local',
@@ -25,6 +31,10 @@ initializeApp();
 
 async function queryUsersByEmail(streamClient: StreamChat, userEmail: string) {
   return streamClient.queryUsers({ email: userEmail } as any);
+}
+
+async function sleep(ms: number) {
+  await new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 async function withRetry<T>(operation: () => Promise<T>, attempts = 3): Promise<T> {
@@ -174,16 +184,7 @@ describe('User Deletion Tests', () => {
 
     try {
       await auth.deleteUser(userId);
-
-      let attempts = 0;
-      while (attempts < 10) {
-        const { users } = await streamClient.queryUsers({ id: userId });
-        if (users.length === 0) {
-          break;
-        }
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        attempts++;
-      }
+      await waitForStreamUserToBeDeleted(streamClient, userId);
     } catch (error: any) {
       if (error?.code !== 'auth/user-not-found') {
         console.log('[afterEach] (Expected) Error trying to delete user: ', error);
@@ -208,39 +209,37 @@ describe('User Deletion Tests', () => {
 
     const { users: deletedUsers } = await streamClient.queryUsers({ id: userId });
     expect(deletedUsers.length).toBe(0);
-  }, 10000);
+  });
 });
 
-async function waitForStreamUserToBeCreated(streamClient: StreamChat, userId: string) {
-  const maxAttempts = 10;
-  const waitTime = 500;
-  let attempts = 0;
+async function waitForValue<T>(
+  readValue: () => Promise<T | undefined>,
+  errorMessage: string
+) {
+  const deadline = Date.now() + STREAM_SYNC_TIMEOUT_MS;
 
-  while (attempts < maxAttempts) {
-    const { users } = await streamClient.queryUsers({ id: userId });
-    if (users.length > 0) {
-      return;
+  while (Date.now() < deadline) {
+    const value = await readValue();
+    if (value !== undefined) {
+      return value;
     }
-    await new Promise((resolve) => setTimeout(resolve, waitTime));
-    attempts++;
+
+    await sleep(STREAM_SYNC_POLL_INTERVAL_MS);
   }
 
-  throw new Error('Stream user was not created within timeout');
+  throw new Error(errorMessage);
+}
+
+async function waitForStreamUserToBeCreated(streamClient: StreamChat, userId: string) {
+  return waitForValue(async () => {
+    const { users } = await streamClient.queryUsers({ id: userId });
+    return users.find((user) => user.id === userId) as StreamUserWithEmail | undefined;
+  }, 'Stream user was not created within timeout');
 }
 
 async function waitForStreamUserToBeDeleted(streamClient: StreamChat, userId: string) {
-  const maxAttempts = 10;
-  const waitTime = 500;
-  let attempts = 0;
-
-  while (attempts < maxAttempts) {
+  await waitForValue(async () => {
     const { users } = await streamClient.queryUsers({ id: userId });
-    if (users.length === 0) {
-      return;
-    }
-    await new Promise((resolve) => setTimeout(resolve, waitTime));
-    attempts++;
-  }
-
-  throw new Error('Stream user was not deleted within timeout');
+    return users.length === 0 ? true : undefined;
+  }, 'Stream user was not deleted within timeout');
 }

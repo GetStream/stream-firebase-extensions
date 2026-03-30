@@ -4,6 +4,7 @@
     "prepare": "npm run build",
     "lint": "ESLINT_USE_FLAT_CONFIG=false eslint .",
     "build": "tsc",
+    "test": "npm run build && node --test test/*.test.js",
     "serve": "npm run build && firebase emulators:start --only functions",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
