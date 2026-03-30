@@ -1,0 +1,23 @@
+{
+  "functions": {
+    "source": "../firestore-activity-feeds/functions",
+    "region": "europe-west1"
+  },
+  "emulators": {
+    "hub": {
+      "port": 4000
+    },
+    "auth": {
+      "port": 9099
+    },
+    "firestore": {
+      "port": 8080
+    },
+    "functions": {
+      "port": 5001
+    },
+    "ui": {
+      "enabled": true
+    }
+  }
+}

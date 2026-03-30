@@ -1,12 +1,16 @@
 import * as admin from "firebase-admin";
-import * as functions from "firebase-functions";
+import * as functions from "firebase-functions/v1";
 import { DocumentSnapshot } from "firebase-functions/v1/firestore";
 import * as stream from "getstream";
 import { Activity } from "getstream";
 
 admin.initializeApp();
 
-const serverClient = stream.connect(process.env.STREAM_API_KEY!, process.env.STREAM_API_SECRET!);
+function getServerClient() {
+  return stream.connect(process.env.STREAM_API_KEY!, process.env.STREAM_API_SECRET!);
+}
+
+const collectionId = process.env.COLLECTION ?? "feeds";
 
 /**
  * Determine if document is a Stream activity
@@ -51,7 +55,7 @@ function getActivityData(snapshot: DocumentSnapshot): ActivityData | undefined {
   const feedId = snapshot.ref.parent.parent?.id;
   if (!feedId) {
     functions.logger.error(
-      `Couldn't parse feedId. Expected ${process.env.COLLECTION}/{feedId}/{userId}/{foreignId}`,
+      `Couldn't parse feedId. Expected ${collectionId}/{feedId}/{userId}/{foreignId}`,
     );
     return;
   }
@@ -87,7 +91,7 @@ function getActivityData(snapshot: DocumentSnapshot): ActivityData | undefined {
  *
  */
 export const activitiesToFirestore = functions.firestore
-  .document(`${process.env.COLLECTION}/{feedId}/{userId}/{foreignId}`)
+  .document(`${collectionId}/{feedId}/{userId}/{foreignId}`)
   .onWrite(async (change) => {
     if (!change.after.exists) {
       // Delete
@@ -97,6 +101,7 @@ export const activitiesToFirestore = functions.firestore
         return;
       }
       const { feedId, userId, activity } = data;
+      const serverClient = getServerClient();
 
       const feed = serverClient.feed(feedId, userId);
       const response = await feed.removeActivity(activity);
@@ -109,6 +114,7 @@ export const activitiesToFirestore = functions.firestore
       return;
     }
     const { feedId, userId, activity } = data;
+    const serverClient = getServerClient();
     const feed = serverClient.feed(feedId, userId);
 
     if (change.before.exists) {
