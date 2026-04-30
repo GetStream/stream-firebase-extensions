@@ -25,11 +25,53 @@ const actor = 'user:1';
 const verb = 'run';
 const object = 'exercise:42';
 
+jest.setTimeout(30000);
+
 initializeApp();
+
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 describe('Firestore Activity Feeds tests', () => {
   let firestore: FirebaseFirestore.Firestore;
   let streamClient: stream.StreamClient;
+  let userFeed: stream.StreamFeed;
+
+  async function getActivities() {
+    const response = await userFeed.get();
+    return response.results;
+  }
+
+  async function clearActivities() {
+    const allActivities = await getActivities();
+    await Promise.all(
+      allActivities.map((r: FeedAPIResponse['results'][number]) =>
+        userFeed.removeActivity(r.id)
+      )
+    );
+  }
+
+  async function waitForActivities(
+    expected: Partial<FeedAPIResponse['results'][number]>[],
+    timeoutMs = 15000
+  ) {
+    const startedAt = Date.now();
+    let activities = await getActivities();
+
+    while (Date.now() - startedAt < timeoutMs) {
+      try {
+        expect(activities).toMatchObject(expected);
+        return activities;
+      } catch {
+        await sleep(500);
+        activities = await getActivities();
+      }
+    }
+
+    expect(activities).toMatchObject(expected);
+    return activities;
+  }
 
   beforeAll(async () => {
     // Initialize Firebase tools
@@ -37,25 +79,13 @@ describe('Firestore Activity Feeds tests', () => {
 
     // Clear all activities
     streamClient = stream.connect(api_key, api_secret);
-    const user1 = streamClient.feed(feedId, userId);
-    const allActivities = await user1.get();
-    await Promise.all(
-      allActivities.results.map((r: FeedAPIResponse['results'][number]) =>
-        user1.removeActivity(r.id)
-      )
-    );
+    userFeed = streamClient.feed(feedId, userId);
+    await clearActivities();
   });
 
   afterEach(async () => {
     // Clear all activities
-    const streamClient = stream.connect(api_key, api_secret);
-    const user1 = streamClient.feed(feedId, userId);
-    const allActivities = await user1.get();
-    await Promise.all(
-      allActivities.results.map((r: FeedAPIResponse['results'][number]) =>
-        user1.removeActivity(r.id)
-      )
-    );
+    await clearActivities();
 
     // Clear firebase doc
     const collectionPath = `${collectionId}/${feedId}/${userId}/${foreignId}`;
@@ -72,10 +102,7 @@ describe('Firestore Activity Feeds tests', () => {
     // When
 
     // Then
-    const streamClient = stream.connect(api_key, api_secret);
-    const user1 = streamClient.feed(feedId, userId);
-    const response = await user1.get();
-    expect(response.results).toMatchObject([]);
+    await waitForActivities([]);
   });
 
   test('verify activity creation', async () => {
@@ -92,14 +119,8 @@ describe('Firestore Activity Feeds tests', () => {
 
     await docRef.create({ actor, verb, object });
 
-    // Wait for triggers to execute
-    await new Promise((resolve) => setTimeout(resolve, 3000));
-
     // Then
-    const streamClient = stream.connect(api_key, api_secret);
-    const user1 = streamClient.feed(feedId, userId);
-    const response = await user1.get();
-    expect(response.results).toMatchObject([{ actor, verb, object }]);
+    await waitForActivities([{ actor, verb, object }]);
   });
 
   test('verify activity update', async () => {
@@ -116,13 +137,9 @@ describe('Firestore Activity Feeds tests', () => {
 
     // When
     await docRef.update({ verb: 'jumped' });
-    await new Promise((resolve) => setTimeout(resolve, 2000));
 
     // Then
-    const streamClient = stream.connect(api_key, api_secret);
-    const user1 = streamClient.feed(feedId, userId);
-    const response = await user1.get();
-    expect(response.results).toMatchObject([{ actor, verb: 'jumped', object }]);
+    await waitForActivities([{ actor, verb: 'jumped', object }]);
   });
 
   test('verify activity deletion', async () => {
@@ -131,16 +148,8 @@ describe('Firestore Activity Feeds tests', () => {
     const docRef = firestore.doc(collectionPath);
     await docRef.create({ actor, verb, object });
 
-    // Wait for triggers to execute
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
     // Verify activity was created
-    const streamClient = stream.connect(api_key, api_secret);
-    const user1 = streamClient.feed(feedId, userId);
-    const responseBeforeDeletion = await user1.get();
-    expect(responseBeforeDeletion.results).toMatchObject([
-      { actor, verb, object },
-    ]);
+    await waitForActivities([{ actor, verb, object }]);
 
     // When
     const doc = await docRef.get();
@@ -148,11 +157,7 @@ describe('Firestore Activity Feeds tests', () => {
       await docRef.delete();
     }
 
-    // Wait for triggers to execute
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
     // Then
-    const responseAfterDeletion = await user1.get();
-    expect(responseAfterDeletion.results).toMatchObject([]);
-  }, 10000);
+    await waitForActivities([]);
+  });
 });

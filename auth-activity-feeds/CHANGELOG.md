@@ -1,3 +1,8 @@
+## Version 0.2.6
+
+- Add Node v22 engine enforcement to the integration test package
+- Keep CI, local package validation, and emulator coverage aligned with the `nodejs22` release
+
 ## Version 0.2.5
 
 - Update all extension runtimes and package engines to Node v22

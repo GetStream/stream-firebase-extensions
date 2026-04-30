@@ -8,6 +8,9 @@
     "test-auth-activity-feeds": "firebase emulators:exec --only auth,functions --project demo-stream --config firebase.auth-activity-feeds.json --log-verbosity SILENT 'npx jest auth-activity-feeds.test.ts --runInBand --detectOpenHandles --forceExit'",
     "test-firestore": "sh -c 'cp \"extensions/firestore-activity-feeds.env.local\" \"../firestore-activity-feeds/functions/.env.local\" && cp \"extensions/firestore-activity-feeds.secret.local\" \"../firestore-activity-feeds/functions/.secret.local\" && firebase emulators:exec --only firestore,functions --project demo-stream --config firebase.firestore.json --log-verbosity SILENT \"npx jest firestore.test.ts --runInBand --detectOpenHandles --forceExit\"; rc=$?; rm -f \"../firestore-activity-feeds/functions/.env.local\" \"../firestore-activity-feeds/functions/.secret.local\"; exit $rc'"
   },
+  "engines": {
+    "node": "22"
+  },
   "dependencies": {
     "@types/jest": "^29.5.14",
     "dotenv": "^17.3.1",
