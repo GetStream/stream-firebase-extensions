@@ -74,10 +74,17 @@ Stream is the #1 provider for activity feeds and chat APIs, powering over a bill
 
 - [Firebase project](https://firebase.google.com/docs/projects/create) with Blaze (pay-as-you-go) plan
 - [Stream account](https://getstream.io/try-for-free/) with API key and secret
+- Node.js 22 for local builds and integration tests (`.nvmrc` is included)
 
 ### Installation
 
 Each extension can be installed using either the Firebase Console or the Firebase CLI. See individual extension READMEs for detailed installation instructions.
+
+### Runtime Strategy
+
+These extensions now target the `nodejs22` runtime, but they intentionally stay on `firebase-functions/v1`.
+
+Firebase Extensions currently treats the trigger types used here as 1st-gen only, so the repo avoids mixing in partial v2 migrations that would create versioning and rollout ambiguity for installed extension instances.
 
 ## Resources
 

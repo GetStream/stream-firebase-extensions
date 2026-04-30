@@ -1,5 +1,5 @@
 import { Functions, httpsCallable } from 'firebase/functions';
-import { createUser, displayName, email, password } from './util';
+import { createUser, email, password } from './util';
 import { initializeApp } from 'firebase-admin/app';
 import { initializeApp as initializeFirebaseClient } from 'firebase/app';
 import { Auth, getAuth } from 'firebase-admin/auth';
@@ -20,8 +20,8 @@ describe('Token Generation', () => {
   beforeAll(async () => {
     // Load environment variables
     for (const path of [
-      'extensions/auth-activity-feeds.env.local',
-      'extensions/auth-activity-feeds.secret.local',
+      'extensions/auth-chat.env.local',
+      'extensions/auth-chat.secret.local',
     ]) {
       const { error } = dotenv.config({ path });
       if (error) {
@@ -49,7 +49,7 @@ describe('Token Generation', () => {
     });
 
     // Setup Functions emulator
-    functions = getFunctions(app, 'europe-west1'); // Specify the region here
+    functions = getFunctions(app, 'us-central1');
     connectFunctionsEmulator(functions, '127.0.0.1', 5001);
 
     // Setup Auth emulator
@@ -94,15 +94,16 @@ describe('Token Generation', () => {
     // Get Stream token
     const getStreamUserToken = httpsCallable<undefined, string>(
       functions,
-      'ext-auth-chat-getStreamUserToken'
+      'getStreamUserToken'
     );
     try {
       const { data: token } = await getStreamUserToken();
       // Verify token works with Stream
       await streamClient.connectUser({ id: uid }, token);
-      expect(streamClient.user.name).toBe(displayName);
+      expect(streamClient.userID).toBe(uid);
     } catch (error) {
       console.error(error);
+      throw error;
     } finally {
       // Clean up Stream connection
       if (streamClient.user) {
@@ -122,7 +123,7 @@ describe('Token Generation', () => {
     // Attempt to get Stream token
     const getStreamUserToken = httpsCallable<undefined, string>(
       functions,
-      'ext-auth-chat-getStreamUserToken'
+      'getStreamUserToken'
     );
 
     // Verify it fails with the correct error

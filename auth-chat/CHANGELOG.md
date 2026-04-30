@@ -1,3 +1,14 @@
+## Version 0.2.6
+
+- Add Node v22 engine enforcement to the integration test package
+- Keep CI, local package validation, and emulator coverage aligned with the `nodejs22` release
+
+## Version 0.2.5
+
+- Update all extension runtimes and package engines to Node v22
+- Keep the extension on `firebase-functions/v1`, because Firebase Extensions still treats these Auth and callable triggers as 1st-gen only
+- Align CI and local development on Node v22
+
 ## Version 0.2.4
 
 - Ensure all cloud functions run on Node v18
