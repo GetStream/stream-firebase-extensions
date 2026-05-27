@@ -11,7 +11,11 @@ import {
 } from 'firebase/auth';
 import { StreamChat } from 'stream-chat';
 import * as dotenv from 'dotenv';
-import { emulatorProjectId, functionsRegion } from './emulator-setup';
+import {
+  emulatorProjectId,
+  extensionCallableName,
+  functionsRegion,
+} from './emulator-setup';
 
 describe('Token Generation', () => {
   let auth: Auth;
@@ -94,7 +98,7 @@ describe('Token Generation', () => {
     // Get Stream token
     const getStreamUserToken = httpsCallable<undefined, string>(
       functions,
-      'getStreamUserToken'
+      extensionCallableName('getStreamUserToken')
     );
     try {
       const { data: token } = await getStreamUserToken();
@@ -123,7 +127,7 @@ describe('Token Generation', () => {
     // Attempt to get Stream token
     const getStreamUserToken = httpsCallable<undefined, string>(
       functions,
-      'getStreamUserToken'
+      extensionCallableName('getStreamUserToken')
     );
 
     // Verify it fails with the correct error

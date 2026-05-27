@@ -28,6 +28,13 @@ export const emulatorProjectId = projectId;
 export const functionsRegion =
   process.env.LOCATION?.trim() || 'us-central1';
 
+/** Firebase extension instance id from integration-tests/firebase.json */
+export const authChatExtensionInstanceId = 'auth-chat';
+
+export function extensionCallableName(functionName: string): string {
+  return `ext-${authChatExtensionInstanceId}-${functionName}`;
+}
+
 export function syncTimeoutMs(defaultMs: number, ciMs: number): number {
   return process.env.CI ? ciMs : defaultMs;
 }

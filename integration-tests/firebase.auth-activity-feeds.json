@@ -2,11 +2,6 @@
   "extensions": {
     "auth-activity-feeds": "../auth-activity-feeds"
   },
-  "functions": {
-    "source": "../auth-activity-feeds/functions",
-    "runtime": "nodejs20",
-    "region": "europe-west1"
-  },
   "emulators": {
     "hub": {
       "port": 4000
