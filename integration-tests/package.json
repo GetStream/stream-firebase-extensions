@@ -9,7 +9,7 @@
     "test-firestore": "sh -c 'cp \"extensions/firestore-activity-feeds.env.local\" \"../firestore-activity-feeds/functions/.env.local\" && cp \"extensions/firestore-activity-feeds.secret.local\" \"../firestore-activity-feeds/functions/.secret.local\" && firebase emulators:exec --only firestore,functions --project demo-stream --config firebase.firestore.json --log-verbosity SILENT \"npx jest firestore.test.ts --runInBand --detectOpenHandles --forceExit\"; rc=$?; rm -f \"../firestore-activity-feeds/functions/.env.local\" \"../firestore-activity-feeds/functions/.secret.local\"; exit $rc'"
   },
   "engines": {
-    "node": "22"
+    "node": "20"
   },
   "dependencies": {
     "@types/jest": "^29.5.14",

@@ -74,7 +74,7 @@ Stream is the #1 provider for activity feeds and chat APIs, powering over a bill
 
 - [Firebase project](https://firebase.google.com/docs/projects/create) with Blaze (pay-as-you-go) plan
 - [Stream account](https://getstream.io/try-for-free/) with API key and secret
-- Node.js 22 for local builds and integration tests (`.nvmrc` is included)
+- Node.js 20 for local builds and integration tests (`.nvmrc` is included)
 
 ### Installation
 
@@ -82,9 +82,9 @@ Each extension can be installed using either the Firebase Console or the Firebas
 
 ### Runtime Strategy
 
-These extensions now target the `nodejs22` runtime, but they intentionally stay on `firebase-functions/v1`.
+These extensions target the `nodejs20` runtime on **1st-gen** Cloud Functions, and intentionally stay on `firebase-functions/v1`.
 
-Firebase Extensions currently treats the trigger types used here as 1st-gen only, so the repo avoids mixing in partial v2 migrations that would create versioning and rollout ambiguity for installed extension instances.
+Firebase Extensions deploy these triggers as Gen1 functions. Gen1 does not reliably support `nodejs22` across regions and projects ([issue #711](https://github.com/GetStream/stream-firebase-extensions/issues/711), [#787](https://github.com/GetStream/stream-firebase-extensions/issues/787)). Auth event triggers are not available on Gen2 yet, so we use `nodejs20` rather than a partial Gen2 migration.
 
 ## Resources
 
