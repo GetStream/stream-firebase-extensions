@@ -3,13 +3,15 @@
  * Fail fast when CI secrets were not written to extension env files.
  * Does not print secret values.
  */
+require('./prepare-extension-env');
+
 const fs = require('fs');
 const path = require('path');
 
 const root = path.join(__dirname, '..', 'extensions');
 const pairs = [
-  ['auth-chat.env.local', ['LOCATION', 'STREAM_API_KEY']],
-  ['auth-chat.secret.local', ['STREAM_API_SECRET']],
+  ['auth-chat.env.local', ['LOCATION']],
+  ['auth-chat.secret.local', ['STREAM_API_KEY', 'STREAM_API_SECRET']],
 ];
 
 let failed = false;
@@ -34,7 +36,8 @@ if (failed) {
   console.error(
     '\nRepository secrets ENV_LOCAL and SECRET_LOCAL must be configured.\n' +
       'ENV_LOCAL should include LOCATION=... (e.g. us-central1) and STREAM_API_KEY=...\n' +
-      'SECRET_LOCAL should include STREAM_API_SECRET=...\n',
+      'SECRET_LOCAL should include STREAM_API_SECRET=...\n' +
+      '(prepare-extension-env.js moves STREAM_API_KEY into *.secret.local)\n',
   );
   process.exit(1);
 }

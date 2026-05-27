@@ -6,7 +6,9 @@ npm test
 
 Use Node.js 20 when running the test suite locally. The repo includes a top-level `.nvmrc` to keep the extension packages, CI, and emulator runs aligned on the same runtime.
 
-Auth integration tests start the **Extensions** emulator (`--only auth,functions,extensions`) so Stream API credentials from `extensions/*.env.local` are passed into extension functions. Callable tests must target `ext-auth-chat-getStreamUserToken` (region = `LOCATION` in env files).
+Before tests run, `node scripts/prepare-extension-env.js` moves `STREAM_API_KEY` into `*.secret.local` (required by extension.yaml) and copies merged env into each `functions/` folder for the emulator.
+
+`ENV_LOCAL` should include `LOCATION=us-central1` and `STREAM_API_KEY=...`. `SECRET_LOCAL` should include `STREAM_API_SECRET=...`.
 
 ## Locally
 

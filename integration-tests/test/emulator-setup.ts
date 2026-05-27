@@ -5,7 +5,12 @@ import * as dotenv from 'dotenv';
 import * as path from 'path';
 
 const extensionsDir = path.join(__dirname, '..', 'extensions');
-for (const file of ['auth-chat.env.local', 'auth-chat.secret.local']) {
+for (const file of [
+  'auth-chat.env.local',
+  'auth-chat.secret.local',
+  'auth-activity-feeds.env.local',
+  'auth-activity-feeds.secret.local',
+]) {
   dotenv.config({ path: path.join(extensionsDir, file) });
 }
 
@@ -24,16 +29,8 @@ if (process.env.CI) {
 
 export const emulatorProjectId = projectId;
 
-/** Must match LOCATION in extensions/*.env.local (CI: ENV_LOCAL secret). */
-export const functionsRegion =
-  process.env.LOCATION?.trim() || 'us-central1';
-
-/** Firebase extension instance id from integration-tests/firebase.json */
-export const authChatExtensionInstanceId = 'auth-chat';
-
-export function extensionCallableName(functionName: string): string {
-  return `ext-${authChatExtensionInstanceId}-${functionName}`;
-}
+/** Gen1 functions deployed from firebase.json "functions.source" use us-central1 in the emulator. */
+export const functionsRegion = 'us-central1';
 
 export function syncTimeoutMs(defaultMs: number, ciMs: number): number {
   return process.env.CI ? ciMs : defaultMs;

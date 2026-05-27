@@ -2,6 +2,10 @@
   "extensions": {
     "auth-chat": "../auth-chat"
   },
+  "functions": {
+    "source": "../auth-chat/functions",
+    "runtime": "nodejs20"
+  },
   "emulators": {
     "hub": {
       "port": 4000
