@@ -2,6 +2,7 @@
   "scripts": {
     "prepare": "npm install --prefix ../auth-activity-feeds/functions && npm install --prefix ../auth-chat/functions && npm install --prefix ../firestore-activity-feeds/functions",
     "test": "npm run test-auth && npm run test-token-generation && npm run test-firestore",
+    "test:unit": "npm --prefix ../auth-chat/functions ci && npm --prefix ../auth-chat/functions test",
     "test-token-generation": "firebase emulators:exec --only auth,functions --project demo-stream --config firebase.json --log-verbosity SILENT 'npx jest token-generation.test.ts --runInBand --detectOpenHandles --forceExit'",
     "test-auth": "npm run test-auth-chat && npm run test-auth-activity-feeds",
     "test-auth-chat": "firebase emulators:exec --only auth,functions --project demo-stream --config firebase.json --log-verbosity SILENT 'npx jest auth-chat.test.ts --runInBand --detectOpenHandles --forceExit'",

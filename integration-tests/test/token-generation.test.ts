@@ -49,7 +49,7 @@ describe('Token Generation', () => {
     });
 
     // Setup Functions emulator
-    functions = getFunctions(app, 'us-central1');
+    functions = getFunctions(app, 'europe-west1');
     connectFunctionsEmulator(functions, '127.0.0.1', 5001);
 
     // Setup Auth emulator

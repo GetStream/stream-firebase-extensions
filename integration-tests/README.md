@@ -4,7 +4,7 @@
 npm test
 ```
 
-Use Node.js 22 when running the test suite locally. The repo includes a top-level `.nvmrc` to keep the extension packages, CI, and emulator runs aligned on the same runtime.
+Use Node.js 20 when running the test suite locally. The repo includes a top-level `.nvmrc` to keep the extension packages, CI, and emulator runs aligned on the same runtime.
 
 ## Locally
 
