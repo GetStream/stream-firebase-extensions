@@ -3,4 +3,5 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   watchman: false,
+  setupFiles: ['<rootDir>/test/emulator-setup.ts'],
 };

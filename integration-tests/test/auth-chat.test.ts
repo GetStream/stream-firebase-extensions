@@ -2,6 +2,7 @@ import { initializeApp } from 'firebase-admin/app';
 import { Auth, getAuth } from 'firebase-admin/auth';
 import * as dotenv from 'dotenv';
 import { StreamChat } from 'stream-chat';
+import { emulatorProjectId, syncTimeoutMs } from './emulator-setup';
 import { createUser, displayName, email, photoUrl } from './util';
 
 type StreamUserWithEmail = {
@@ -11,8 +12,8 @@ type StreamUserWithEmail = {
   image?: string;
 };
 
-const STREAM_SYNC_TIMEOUT_MS = 10000;
-const STREAM_SYNC_TEST_TIMEOUT_MS = 15000;
+const STREAM_SYNC_TIMEOUT_MS = syncTimeoutMs(10_000, 30_000);
+const STREAM_SYNC_TEST_TIMEOUT_MS = syncTimeoutMs(15_000, 90_000);
 const STREAM_SYNC_POLL_INTERVAL_MS = 250;
 
 jest.setTimeout(STREAM_SYNC_TEST_TIMEOUT_MS);
@@ -27,7 +28,7 @@ for (const path of [
   }
 }
 
-initializeApp();
+initializeApp({ projectId: emulatorProjectId });
 
 async function queryUsersByEmail(streamClient: StreamChat, userEmail: string) {
   return streamClient.queryUsers({ email: userEmail } as any);

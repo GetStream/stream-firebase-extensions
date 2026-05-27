@@ -2,6 +2,7 @@ import { initializeApp } from 'firebase-admin/app';
 import { Auth, getAuth } from 'firebase-admin/auth';
 import { connect as connectToFeeds } from 'getstream';
 import * as dotenv from 'dotenv';
+import { emulatorProjectId, syncTimeoutMs } from './emulator-setup';
 import { createUser, displayName, email, photoUrl } from './util';
 
 for (const path of [
@@ -14,7 +15,7 @@ for (const path of [
   }
 }
 
-initializeApp();
+initializeApp({ projectId: emulatorProjectId });
 
 async function cleanupFirebaseUsers(auth: Auth) {
   const userRecords = await auth.listUsers();
@@ -68,7 +69,7 @@ describe('User Creation Tests', () => {
     expect(user?.name).toBe(displayName);
     expect(user?.profileImage).toBe(photoUrl);
     expect(user?.email).toBe(email);
-  }, 15000);
+  }, syncTimeoutMs(15_000, 90_000));
 });
 
 describe('User Deletion Tests', () => {
@@ -119,7 +120,7 @@ describe('User Deletion Tests', () => {
     expect(user.name).toBe(displayName);
     expect(user.profileImage).toBe(photoUrl);
     expect(user.email).toBe(email);
-  }, 15000);
+  }, syncTimeoutMs(15_000, 90_000));
 
   test('Deleted Firebase user syncs with Stream Feeds', async () => {
     const feedsClient = connectToFeeds(apiKey, apiSecret);
@@ -130,14 +131,14 @@ describe('User Deletion Tests', () => {
 
     await auth.deleteUser(userId);
     await waitForFeedUserToBeDeleted(feedsClient, userId);
-  }, 15000);
+  }, syncTimeoutMs(15_000, 90_000));
 });
 
 async function waitForFeedUserToBeCreated(
   feedsClient: ReturnType<typeof connectToFeeds>,
   userId: string
 ) {
-  const maxAttempts = 20;
+  const maxAttempts = process.env.CI ? 60 : 20;
   const waitTime = 500;
   let attempts = 0;
 
@@ -162,7 +163,7 @@ async function waitForFeedUserToBeDeleted(
   feedsClient: ReturnType<typeof connectToFeeds>,
   userId: string
 ) {
-  const maxAttempts = 20;
+  const maxAttempts = process.env.CI ? 60 : 20;
   const waitTime = 500;
   let attempts = 0;
 
