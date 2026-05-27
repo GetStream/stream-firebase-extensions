@@ -12,6 +12,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      CI: true
 
     steps:
     - uses: actions/checkout@v4
@@ -24,6 +26,12 @@ jobs:
       with:
         distribution: temurin
         java-version: 21
+    - name: Build and unit test auth-chat functions
+      working-directory: auth-chat/functions
+      run: |
+        npm ci
+        npm run build
+        npm test    
     - run: npm ci
       working-directory: integration-tests
     - name: Generate .env.local and .secret.local files
