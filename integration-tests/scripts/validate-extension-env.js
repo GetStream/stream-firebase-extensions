@@ -8,7 +8,7 @@ const path = require('path');
 
 const root = path.join(__dirname, '..', 'extensions');
 const pairs = [
-  ['auth-chat.env.local', ['STREAM_API_KEY']],
+  ['auth-chat.env.local', ['LOCATION', 'STREAM_API_KEY']],
   ['auth-chat.secret.local', ['STREAM_API_SECRET']],
 ];
 
@@ -33,7 +33,7 @@ for (const [file, requiredKeys] of pairs) {
 if (failed) {
   console.error(
     '\nRepository secrets ENV_LOCAL and SECRET_LOCAL must be configured.\n' +
-      'ENV_LOCAL should include at least STREAM_API_KEY=... and LOCATION=europe-west1\n' +
+      'ENV_LOCAL should include LOCATION=... (e.g. us-central1) and STREAM_API_KEY=...\n' +
       'SECRET_LOCAL should include STREAM_API_SECRET=...\n',
   );
   process.exit(1);

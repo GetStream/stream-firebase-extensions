@@ -28,7 +28,7 @@ STREAM_API_SECRET=
 ### extensions/auth-chat.env.local
 
 ```env
-LOCATION=europe-west1
+LOCATION=us-central1
 STREAM_API_KEY=
 ```
 

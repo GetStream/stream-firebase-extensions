@@ -55,7 +55,7 @@ describe('Firestore Activity Feeds tests', () => {
 
   async function waitForActivities(
     expected: Partial<FeedAPIResponse['results'][number]>[],
-    timeoutMs = 15000
+    timeoutMs = syncTimeoutMs(15_000, 60_000)
   ) {
     const startedAt = Date.now();
     let activities = await getActivities();

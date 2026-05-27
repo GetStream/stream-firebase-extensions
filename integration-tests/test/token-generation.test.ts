@@ -11,7 +11,7 @@ import {
 } from 'firebase/auth';
 import { StreamChat } from 'stream-chat';
 import * as dotenv from 'dotenv';
-import { emulatorProjectId } from './emulator-setup';
+import { emulatorProjectId, functionsRegion } from './emulator-setup';
 
 describe('Token Generation', () => {
   let auth: Auth;
@@ -48,8 +48,8 @@ describe('Token Generation', () => {
       apiKey: 'fake-api-key',
     });
 
-    // Setup Functions emulator
-    functions = getFunctions(app, 'europe-west1');
+    // Region must match LOCATION in extensions/auth-chat.env.local
+    functions = getFunctions(app, functionsRegion);
     connectFunctionsEmulator(functions, '127.0.0.1', 5001);
 
     // Setup Auth emulator
