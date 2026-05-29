@@ -22,6 +22,7 @@ These extensions enable you to quickly add rich social experiences to your appli
 **Authenticate with Stream Chat using Firebase Authentication**
 
 This extension allows you to:
+
 - Securely generate Stream Chat user tokens using Firebase Authentication
 - Synchronize your Firebase Authentication user records with Stream Chat
 - Support all Firebase Authentication methods (email/password, Google, Apple, Facebook, etc.)
@@ -33,6 +34,7 @@ This extension allows you to:
 **Authenticate with Stream Feeds using Firebase Authentication**
 
 This extension allows you to:
+
 - Securely generate Stream Activity Feeds user tokens using Firebase Authentication
 - Synchronize your Firebase Authentication users with Stream Activity Feeds
 - Support all Firebase Authentication methods (email/password, Google, Apple, Facebook, etc.)
@@ -44,6 +46,7 @@ This extension allows you to:
 **Sync Firestore with Activity Feeds**
 
 This extension allows you to:
+
 - Automatically create Activity Feeds from data in a Firestore collection
 - Keep your Firestore data in sync with Stream Activity Feeds in real-time
 - Leverage Stream's powerful feed infrastructure while using Firestore as your database
@@ -82,7 +85,7 @@ Each extension can be installed using either the Firebase Console or the Firebas
 
 ### Runtime Strategy
 
-These extensions target the `nodejs20` runtime on **1st-gen** Cloud Functions, and intentionally stay on `firebase-functions/v1`.
+These extensions target the `nodejs20` runtime on **1st-gen** Cloud Functions (as of v0.2.7), and intentionally stay on `firebase-functions/v1`.
 
 Firebase Extensions deploy these triggers as Gen1 functions. Gen1 does not reliably support `nodejs22` across regions and projects ([issue #711](https://github.com/GetStream/stream-firebase-extensions/issues/711), [#787](https://github.com/GetStream/stream-firebase-extensions/issues/787)). Auth event triggers are not available on Gen2 yet, so we use `nodejs20` rather than a partial Gen2 migration.
 
@@ -124,4 +127,4 @@ Stream is growing and we're constantly looking for talented individuals to join 
 
 ## License
 
-[Apache-2.0](./LICENSE) 
+[Apache-2.0](./LICENSE)
