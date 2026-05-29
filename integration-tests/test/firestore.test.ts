@@ -3,6 +3,7 @@ import { initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 import * as stream from 'getstream';
 import { FeedAPIResponse } from 'getstream';
+import { emulatorProjectId, syncTimeoutMs } from './emulator-setup';
 
 for (const path of [
   'extensions/firestore-activity-feeds.env.local',
@@ -25,9 +26,9 @@ const actor = 'user:1';
 const verb = 'run';
 const object = 'exercise:42';
 
-jest.setTimeout(30000);
+jest.setTimeout(syncTimeoutMs(30_000, 90_000));
 
-initializeApp();
+initializeApp({ projectId: emulatorProjectId });
 
 function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -54,7 +55,7 @@ describe('Firestore Activity Feeds tests', () => {
 
   async function waitForActivities(
     expected: Partial<FeedAPIResponse['results'][number]>[],
-    timeoutMs = 15000
+    timeoutMs = syncTimeoutMs(15_000, 60_000)
   ) {
     const startedAt = Date.now();
     let activities = await getActivities();

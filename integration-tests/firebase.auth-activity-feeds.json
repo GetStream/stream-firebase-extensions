@@ -4,7 +4,7 @@
   },
   "functions": {
     "source": "../auth-activity-feeds/functions",
-    "region": "europe-west1"
+    "runtime": "nodejs20"
   },
   "emulators": {
     "hub": {

@@ -4,7 +4,7 @@
   },
   "functions": {
     "source": "../auth-chat/functions",
-    "region": "europe-west1"
+    "runtime": "nodejs20"
   },
   "emulators": {
     "hub": {

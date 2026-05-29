@@ -11,6 +11,7 @@ import {
 } from 'firebase/auth';
 import { StreamChat } from 'stream-chat';
 import * as dotenv from 'dotenv';
+import { emulatorProjectId, functionsRegion } from './emulator-setup';
 
 describe('Token Generation', () => {
   let auth: Auth;
@@ -36,20 +37,19 @@ describe('Token Generation', () => {
       throw new Error('STREAM_API_KEY and STREAM_API_SECRET must be set');
     }
 
-    // Initialize Firebase Admin with explicit project ID
     initializeApp({
-      projectId: 'demo-stream',
+      projectId: emulatorProjectId,
     });
     auth = getAuth();
 
     // Initialize Firebase Client
     const app = initializeFirebaseClient({
-      projectId: 'demo-stream',
+      projectId: emulatorProjectId,
       apiKey: 'fake-api-key',
     });
 
-    // Setup Functions emulator
-    functions = getFunctions(app, 'us-central1');
+    // Region must match LOCATION in extensions/auth-chat.env.local
+    functions = getFunctions(app, functionsRegion);
     connectFunctionsEmulator(functions, '127.0.0.1', 5001);
 
     // Setup Auth emulator

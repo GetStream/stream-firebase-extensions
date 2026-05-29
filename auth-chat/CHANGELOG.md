@@ -1,3 +1,8 @@
+## Version 0.2.7
+
+- Revert extension Cloud Functions runtime from `nodejs22` to `nodejs20` for Gen1 compatibility
+- Fixes deployment failures on new Firebase projects ([#711](https://github.com/GetStream/stream-firebase-extensions/issues/711), [#787](https://github.com/GetStream/stream-firebase-extensions/issues/787))
+
 ## Version 0.2.6
 
 - Add Node v22 engine enforcement to the integration test package

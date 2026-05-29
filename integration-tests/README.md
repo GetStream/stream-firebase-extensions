@@ -4,7 +4,11 @@
 npm test
 ```
 
-Use Node.js 22 when running the test suite locally. The repo includes a top-level `.nvmrc` to keep the extension packages, CI, and emulator runs aligned on the same runtime.
+Use Node.js 20 when running the test suite locally. The repo includes a top-level `.nvmrc` to keep the extension packages, CI, and emulator runs aligned on the same runtime.
+
+Before tests run, `node scripts/prepare-extension-env.js` moves `STREAM_API_KEY` into `*.secret.local` (required by extension.yaml) and copies merged env into each `functions/` folder for the emulator.
+
+`ENV_LOCAL` should include `LOCATION=us-central1` and `STREAM_API_KEY=...`. `SECRET_LOCAL` should include `STREAM_API_SECRET=...`.
 
 ## Locally
 
@@ -28,7 +32,7 @@ STREAM_API_SECRET=
 ### extensions/auth-chat.env.local
 
 ```env
-LOCATION=
+LOCATION=us-central1
 STREAM_API_KEY=
 ```
 
